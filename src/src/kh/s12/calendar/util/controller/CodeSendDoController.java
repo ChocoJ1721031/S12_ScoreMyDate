@@ -25,15 +25,14 @@ public class CodeSendDoController extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession();
 		
-		String memail = request.getParameter("mail");
+		String memail = request.getParameter("data");
 		String rndCode = RandCode.numberGen(6,2); //인증코드
-		
 		
 		int cs = MailService.codeSend(memail, rndCode);
 		
 		if(cs == 1) { //세션 codeSend 값이 1이냐 아니냐로 "인증번호 전송", "인즌번호 확인" 버튼 활성화 여부 결정
 			System.out.println("메일 전송 성공");
-			session.setAttribute("code", rndCode);
+			session.setAttribute("sessCode", rndCode);
 			out.append("ok");
 		} else {
 			System.out.println("메일 전송 실패");

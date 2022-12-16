@@ -22,7 +22,7 @@
 	<div id="section">
 		<div>
 		
-			<form id="form" action="/join.do" method="post">
+			<form id="form">
 				<div>
 					<div><input type="text" id="mname" name="mname" placeholder="닉네임을 입력해주세요" value=""></div>
 				</div>
@@ -36,7 +36,8 @@
 				<div>
 					<div><input type="password" id="pw2" name="pw2" placeholder="비밀번호를 한번 더 입력해주세요" value=""></div>
 				</div>
-				<button type="button" onclick="submit()">가입하기</button>
+				<input type="hidden" id="mailOk" value="0">
+				<button type="button" onclick="join()">가입하기</button>
 			</form>
 			
 		</div>

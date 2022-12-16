@@ -36,7 +36,7 @@ public class MemberDAO {
 	}
 	
 	//회원가입
-	public int insert(Connection conn, MemberVO vo) {//TODO
+	public int insertMember(Connection conn, MemberVO vo) {//TODO
 		PreparedStatement pstmt = null;
 		int result = 0;
 		int mid = midCreate(conn);
@@ -48,8 +48,8 @@ public class MemberDAO {
 				pstmt.setInt(1, mid);
 				pstmt.setString(2, vo.getMemail());
 				pstmt.setString(3, vo.getMpwd());
-				pstmt.setString(5, vo.getReg_date());
-				pstmt.setString(6, vo.getMip());
+				pstmt.setString(4, vo.getMname());
+				pstmt.setString(5, vo.getMip());
 				
 				result = pstmt.executeUpdate();
 			}catch (Exception e) {
@@ -68,13 +68,13 @@ public class MemberDAO {
 		int mid = -1;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT MID FROM MEMBER GROUP BY MID DESC";
+		String sql = "SELECT MAX(MID) AS MID FROM MEMBER";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				mid = rs.getInt("MID") + 1;
+				mid = rs.getInt(1) + 1;
 			}			
 		} catch (Exception e) {
 			e.printStackTrace();

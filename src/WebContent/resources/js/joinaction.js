@@ -12,7 +12,7 @@ window.onload = function() {
 			document.getElementById('codeArea').remove();
 		}
 		
-		//TODO 메일 인증 여부 값 초기화
+		$('#mailOk').val('0');
 	});
 	
 	//메일 중복체크
@@ -56,11 +56,11 @@ window.onload = function() {
 						//인증코드 입력란 생성
 						var codeParent = document.getElementById('codeArea');
 						var inputCode = document.createElement('input');
-						inputCode.setAttribute("id", 'mailCodeInput');
-						inputCode.setAttribute("type", 'text');
-						inputCode.setAttribute("name", 'code');
-						inputCode.setAttribute("placeholder", '인증코드');
-						inputCode.setAttribute("maxlength", '6');
+						inputCode.setAttribute("id", "mailCodeInput");
+						inputCode.setAttribute("type", "text");
+						inputCode.setAttribute("name", "codeInput");
+						inputCode.setAttribute("placeholder", "인증코드");
+						inputCode.setAttribute("maxlength", "6");
 						
 						codeParent.appendChild(inputCode);
 						
@@ -88,54 +88,61 @@ window.onload = function() {
 			event.preventDefault();
 		}
 	});
+	
+	
 }
-$(function() {
-	
-	
-	
-});
 
 //인증코드 메일 전송
 function codeBtn() {
 	var btn = document.getElementById('mailCodeBtn');
 	var chk = 0;
-	if(btn.innerText == "인증코드 전송") {
-		var url = "/codeSend.lo";
-		
-		function mailCode(value) {
-			if (value === "fail") {
-				alert("이메일 전송 실패!");
-			} else {
-				alert("인증번호가 전송됐습니다. 이메일을 확인해 주세요.");
-				chk++;
-				btn.innerText = "확인";
-			}
-		}
-	} else {
-		var url = "/codeChk.lo";
-		function mailCode(value) {
-			if (value === "fail") {
-				alert("코드 인증 실패!");
-			} else {
-				alert("코드가 일치합니다.");
-				chk++;
-				$('#codeArea').remove();
-			}
+	var mailCode;
+	var url = "/codeSend.lo";
+	var data;
+	function mailCode1(value) {
+		if (value === "fail") {
+			alert("이메일 전송 실패!");
+		} else {
+			alert("인증번호가 전송됐습니다. 이메일을 확인해 주세요.");
+			chk++;
+			btn.innerText = "확인";
 		}
 	}
+	function mailCode2(value) {
+		if (value === "fail") {
+			alert("코드 인증 실패!");
+		} else {
+			alert("코드가 일치합니다.");
+			chk++;
+			$('#codeArea').remove();
+			$('#mailOk').val('1');
+		}
+	}
+	
+	
+	if(btn.innerText == "인증코드 전송") {
+		mailCode = mailCode1;
+		url = "/codeSend.lo";
+		data = $('#mail').val();
+	} else {
+		url = "/codeChk.lo";
+		mailCode = mailCode2;
+		data = $('#mailCodeInput').val();
+	}
+	
 	$.ajax({
 		url: url,
 		type: "post",
 		async: false,
 		data: {
-			mail: $('#mail').val()
+			data : data
 		},
 		dataType: "text",
 		success: function(value) {
 			mailCode(value);
 		},
 		error: function(request, status, error) {
-			alert("code" + request.status + "\n" + "message : " + request.responseText + "\nerror" + error);
+			alert("code" + request.status + "\nmessage : " + request.responseText + "\nerror" + error);
 		}
 	});
 
@@ -152,6 +159,53 @@ function login() {
 	location.href = "/login";
 }
 
-function submit() {
-	location.href = "/join.do";
+function join() {
+	var chk = 0;
+	if($('#mailOk').val() == 1 && $('#pw').val() == $('#pw2').val() && $('#mname').val() != null) {
+		$.ajax({
+			url: "/join.lo",
+			type: "post",
+			async: false,
+			data: {
+				mname : $('#mname').val(),
+				mail : $('#mail').val(),
+				pw : $('#pw').val()
+			},
+			dataType: "text",
+			success: function(value) {
+				if (value === "fail") {
+					alert("회원가입 실패! 재시도 해주세요.");
+				}
+				else {
+					alert("회원가입 되었습니다. 로그인 해주세요.");
+					chk++;
+				}
+			},
+			error: function(request, status, error) {
+				alert("code" + request.status + "\nmessage : " + request.responseText + "\nerror" + error);
+			}
+		});	
+	} else {
+		alert('이메일 인증을 해주세요.');
+	}
+	
+	if (chk == 0) {
+		event.preventDefault();
+	} else if(chk == 1) {
+		location.href = "/login";
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

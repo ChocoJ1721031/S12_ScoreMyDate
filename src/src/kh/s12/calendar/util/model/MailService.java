@@ -18,7 +18,6 @@ public class MailService {
 			prop.load(new FileInputStream("D:\\eclipse\\Semi_Project\\Score_My_Day\\src\\kh\\s12\\calendar\\util\\mail\\gmail.properties"));
 			
 			String from = prop.getProperty("id");
-			String pw = prop.getProperty("pw");
 			String to = memail;
 			String subject = "[ScoreMyDate] 회원가입 인증코드 메일입니다.";
 			String content = "다음 코드를 이메일 인증 코드 란에 입력해 주세요. \n" + "[ "+code+" ]";
@@ -61,8 +60,6 @@ public class MailService {
 	
 	public static int codeSend(String memail, String code) { //인증번호 전송 버튼 클릭
 		System.out.println("codeSend 호출 성공");
-		//System.out.println("memail : " + memail);
-		//System.out.println("code : " + code);
 		int result = 0;
 		int mcs = mailCode(memail, code);
 		
@@ -70,17 +67,20 @@ public class MailService {
 			System.out.println("MailService.codeSend " + memail + "코드 전송 성공!");
 			result = 1;
 		} else { //코드 전송 실패한 경우. 메일이 유효한지 확인 메시지 출력
-			System.out.println("MailService.codeSend " +memail + "코드 전송 실패!");
+			System.out.println("MailService.codeSend " + memail + "코드 전송 실패!");
 		}
 		
 		return result;
 	}
 	
-	public static int codeChk(String code, String mailCode) {//TODO //확인 버튼 클릭
+	public static int codeChk(String code, String mailCode) {//확인 버튼 클릭
 		int result = 0;
-			if(code == mailCode) { // 메일 코드 일치
+			if(code.equals(mailCode)) { // 메일 코드 일치
+				System.out.println("코드 일치");
 				result = 1;
-			}	
+			} else {
+				System.out.println("코드 불일치");
+			}
 		
 		return result;
 	}

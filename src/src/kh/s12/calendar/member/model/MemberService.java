@@ -16,10 +16,10 @@ public class MemberService {
 		return vo;
 	}
 	
-	public int insert(MemberVO vo) {
+	public int insertMember(MemberVO vo) {
 		int result = 0;
 		Connection conn = getConnection();
-		result = new MemberDAO().insert(conn, vo);
+		result = new MemberDAO().insertMember(conn, vo);
 		
 		if(result > 0) {
 			JDBCTemplate.commit(conn);
@@ -36,11 +36,13 @@ public class MemberService {
 		int result = 0;
 		Connection conn = getConnection();
 		result = new MemberDAO().dupChk(conn, mail);
-		
 		JDBCTemplate.close(conn);
 		
 		return result;
 	}
+	
+
+	
 	
 	
 }
