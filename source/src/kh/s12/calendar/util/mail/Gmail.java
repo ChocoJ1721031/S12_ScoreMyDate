@@ -12,7 +12,7 @@ public class Gmail extends Authenticator {
     protected PasswordAuthentication getPasswordAuthentication() {
     	Properties prop = new Properties();
     	try {
-			prop.load(new FileInputStream("D:\\eclipse\\Semi_Project\\Score_My_Day\\src\\kh\\s12\\calendar\\util\\mail\\gmail.properties"));
+			prop.load(new FileInputStream("D:\\eclipse\\Semi_Project\\S12_ScoreMyDay\\source\\src\\kh\\s12\\calendar\\util\\mail\\gmail.properties"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

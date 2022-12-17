@@ -15,7 +15,7 @@ public class MailService {
 		int result = 0;
 		try{
 			Properties prop = new Properties();
-			prop.load(new FileInputStream("D:\\eclipse\\Semi_Project\\Score_My_Day\\src\\kh\\s12\\calendar\\util\\mail\\gmail.properties"));
+			prop.load(new FileInputStream("D:\\eclipse\\Semi_Project\\S12_ScoreMyDay\\source\\src\\kh\\s12\\calendar\\util\\mail\\gmail.properties"));
 			
 			String from = prop.getProperty("id");
 			String to = memail;

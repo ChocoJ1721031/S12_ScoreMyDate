@@ -1,87 +1,138 @@
 window.onload = function() {
-	$('#mname').change(function(event) {
-		//TODO
-	});
-	
 	//메일 값 변경시 중복체크 활성화, 인증코드 영역 삭제
 	$('#mail').keyup(function(event) {
 		var dupChkBtn = document.getElementById('dupChkButton');
 		dupChkBtn.disabled = "";
-
+		$('#mailPopM').remove();
 		if($('#codeArea').length != 0) {
-			document.getElementById('codeArea').remove();
+			$('#codeArea').remove();
 		}
 		
 		$('#mailOk').val('0');
 	});
 	
+	//비밀번호 체크
+	var regExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
+	$('#pw').keyup(function(event) {
+		if($('#pw').val().match(regExp) == null) {
+			if($('#pwPopM').length == 0) {
+				var pwParent = document.getElementById('pwArea').firstElementChild;
+				var pwChild = document.createElement('div');
+				pwChild.setAttribute("class", 'popChild');
+				var inputMessage = document.createElement('span');
+				inputMessage.setAttribute("class", 'popMessage');
+				inputMessage.setAttribute("id", 'pwPopM');
+				inputMessage.innerText = "영문, 숫자, 특수기호를 포함하여 최소 8자 입력해 주세요.";
+				
+				pwParent.appendChild(pwChild);
+				pwChild.appendChild(inputMessage);
+				
+			}
+			
+		} else {
+			$('#pwPopM').remove();
+		}
+	});
+	
+	//비밀번호 확인 체크
+	$('#pw2').keyup(function(event) {
+		if($('#pw2').val() != $('#pw').val()) {
+			if($('#pw2PopM').length == 0) {
+				var pwParent = document.getElementById('pwChkArea').firstElementChild;
+				var pwChild = document.createElement('div');
+				pwChild.setAttribute("class", 'popChild');
+				var inputMessage = document.createElement('span');
+				inputMessage.setAttribute("class", 'popMessage');
+				inputMessage.setAttribute("id", 'pw2PopM');
+				inputMessage.innerText = "비밀번호가 일치하지 않습니다.";
+				
+				pwParent.appendChild(pwChild);
+				pwChild.appendChild(inputMessage);
+				
+			}
+			
+		} else {
+			$('#pwPopM').remove();
+		}
+	});
+	
 	//메일 중복체크
 	$('#dupChkButton').click(function(event) {
-		var regex = /^[A-Za-z0-9]$/; //TODO 대충 메일 정규표현식 ㄱㄱ
+		var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 		var chk = 0;
 		if ($('#mail').val() == null || $('#mail').val() == "") {
 			if($('#mailPopM').length == 0) {
 				var mailParent = document.getElementById('mail_input_area').firstElementChild;
+				var pwChild = document.createElement('div');
+				pwChild.setAttribute("class", 'popChild');
 				var inputMessage = document.createElement('span');
 				inputMessage.setAttribute("class", 'popMessage');
 				inputMessage.setAttribute("id", 'mailPopM');
 				inputMessage.innerText = "이메일을 입력해주세요.";
 				
-				mailParent.appendChild(inputMessage);
+				mailParent.appendChild(pwChild);
+				pwChild.appendChild(inputMessage);
 			}
 		} else { //정규표현식 else if 추가 예정
-			$.ajax({
-				url: "/dupchk.lo",
-				type: "post",
-				async: false,
-				data: {
-					mail: $('#mail').val()
-				},
-				dataType: "text",
-				success: function(value) {
-					if (value === "fail") {
-						alert("이미 사용중인 이메일입니다.\n다른 이메일을 사용해 주세요.");
-					} else {
-						alert("사용 가능한 이메일입니다.");
-						chk++;
-						
-						//인증코드 영역 생성
-						var form = document.getElementById('form');
-						var pwArea = document.getElementById('pwArea');
-						var codeArea = document.createElement('div');
-						codeArea.setAttribute("id", 'codeArea');
-						
-						form.insertBefore(codeArea, pwArea);
-						
-						//인증코드 입력란 생성
-						var codeParent = document.getElementById('codeArea');
-						var inputCode = document.createElement('input');
-						inputCode.setAttribute("id", "mailCodeInput");
-						inputCode.setAttribute("type", "text");
-						inputCode.setAttribute("name", "codeInput");
-						inputCode.setAttribute("placeholder", "인증코드");
-						inputCode.setAttribute("maxlength", "6");
-						
-						codeParent.appendChild(inputCode);
-						
-						//인증코드 전송 버튼 생성
-						var codeBtn = document.createElement('button');
-						codeBtn.setAttribute("id", 'mailCodeBtn');
-						codeBtn.setAttribute("type", 'button');
-						codeBtn.setAttribute("onclick", 'codeBtn()');
-						codeBtn.innerText = "인증코드 전송";
-						
-						codeParent.appendChild(codeBtn);
-						
-						//중복체크 버튼 비활성화
-						var dupChkBtn = document.getElementById('dupChkButton');
-						dupChkBtn.disabled = "true";
+			if($('#mail').val().match(regExp) == null) {
+				alert("이메일 형식에 맞게 입력해 주세요.")
+			} else {
+				$.ajax({
+					url: "/dupchk.lo",
+					type: "post",
+					async: false,
+					data: {
+						mail: $('#mail').val()
+					},
+					dataType: "text",
+					success: function(value) {
+						if (value === "fail") {
+							alert("이미 사용중인 이메일입니다.\n다른 이메일을 사용해 주세요.");
+						} else {
+							alert("사용 가능한 이메일입니다.");
+							chk++;
+							
+							//인증코드 영역 생성
+							var form = document.getElementById('form');
+							var pwArea = document.getElementById('pwArea');
+							var codeArea = document.createElement('div');
+							codeArea.setAttribute("id", 'codeArea');
+							codeArea.setAttribute("class", 'inputArea');
+							
+							form.insertBefore(codeArea, pwArea);
+							
+							//인증코드 입력란 생성
+							var codeParent = document.getElementById('codeArea');
+							var inputCode = document.createElement('input');
+							inputCode.setAttribute("id", "mailCodeInput");
+							inputCode.setAttribute("class", "joinInput inpWthBtn");
+							inputCode.setAttribute("type", "text");
+							inputCode.setAttribute("name", "codeInput");
+							inputCode.setAttribute("placeholder", "인증코드");
+							inputCode.setAttribute("maxlength", "6");
+							
+							codeParent.appendChild(inputCode);
+							
+							//인증코드 전송 버튼 생성
+							var codeBtn = document.createElement('button');
+							codeBtn.setAttribute("id", 'mailCodeBtn');
+							codeBtn.setAttribute("class", 'inputbtn');
+							codeBtn.setAttribute("type", 'button');
+							codeBtn.setAttribute("onclick", 'codeBtn()');
+							codeBtn.innerText = "인증코드 전송";
+							
+							codeParent.appendChild(codeBtn);
+							
+							//중복체크 버튼 비활성화
+							var dupChkBtn = document.getElementById('dupChkButton');
+							dupChkBtn.disabled = "true";
+						}
+					},
+					error: function(request, status, error) {
+						alert("code" + request.status + "\n" + "message : " + request.responseText + "\nerror" + error);
 					}
-				},
-				error: function(request, status, error) {
-					alert("code" + request.status + "\n" + "message : " + request.responseText + "\nerror" + error);
-				}
-			});
+				});
+			}
 		}
 
 		if (chk == 0) {
@@ -161,7 +212,7 @@ function login() {
 
 function join() {
 	var chk = 0;
-	if($('#mailOk').val() == 1 && $('#pw').val() == $('#pw2').val() && $('#mname').val() != null) {
+	if($('#mailOk').val() == 1 && $('#pw').val() != "" && $('#pw').val() == $('#pw2').val() && $('#mname').val() != null) {
 		$.ajax({
 			url: "/join.lo",
 			type: "post",
@@ -186,7 +237,15 @@ function join() {
 			}
 		});	
 	} else {
-		alert('이메일 인증을 해주세요.');
+		if($('#mname').val() == "") {
+			alert("닉네임을 입력해 주세요.")
+		} else if($('#mailOk').val() == 0) {
+			alert("이메일을 인증해 주세요.")
+		} else if($('#pw').val() == "") {
+			alert("비밀번호를 입력해 주세요.")
+		} else if($('#pw2').val() == "") {
+			alert("비밀번호를 확인해 주세요.")
+		}
 	}
 	
 	if (chk == 0) {

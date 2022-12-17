@@ -2,7 +2,6 @@ package kh.s12.calendar.member.model;
 
 import java.sql.*;
 import kh.s12.calendar.jdbcDriver.JDBCTemplate;
-//import static kh.s12.calendar.jdbcDriver.JDBCTemplate.*;
 
 public class MemberDAO {
 	public MemberDAO() {  }
