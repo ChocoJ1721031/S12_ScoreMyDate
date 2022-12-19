@@ -27,12 +27,12 @@ public class LoginDoController extends HttpServlet {
 		String pw = request.getParameter("pw");
 		
 		MemberVO vo = mservice.login(mail, pw); 
-		System.out.println(vo);
 		
 		if(vo != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("member", vo);
 			System.out.println("/login 로그인 성공!");
+			System.out.println(vo.getMemail() + "님이 접속하였습니다.");
 			out.append("ok");
 		} else {
 			System.out.println("/login 로그인 실패!");
