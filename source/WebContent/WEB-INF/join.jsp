@@ -8,9 +8,8 @@
 <title>Insert title here</title>
 
 <link rel="stylesheet" href="/resources/css/reset.css">
-<link rel="stylesheet" href="/resources/css/join.css">
 <link rel="stylesheet" href="/resources/css/header.css">
-
+<link rel="stylesheet" href="/resources/css/join.css">
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.js"></script>

@@ -1,6 +1,7 @@
 package kh.s12.calendar.member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,24 +21,22 @@ public class LoginDoController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		response.setContentType("application/json;charset=UTF-8");
 		MemberService mservice = new MemberService();
+		PrintWriter out = response.getWriter();
 		
 		String mail = request.getParameter("mail");
 		String pw = request.getParameter("pw");
 		
 		MemberVO vo = mservice.login(mail, pw); 
 		System.out.println(vo);
+		
 		if(vo != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("member", vo);
 			System.out.println("/login 로그인 성공!");
-			
-			String viewPage = "/main";
-			response.sendRedirect(request.getContextPath() + viewPage);
+			out.append("ok");
 		} else {
 			System.out.println("/login 로그인 실패!");
-			
-			String viewPage = "/login";
-			response.sendRedirect(request.getContextPath() + viewPage);
+			out.append("fail");
 		}
 	}
 }
