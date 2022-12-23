@@ -1,9 +1,6 @@
 package kh.s12.calendar.main.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,16 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
 import kh.s12.calendar.main.model.CalendarService;
 import kh.s12.calendar.main.model.CalendarVO;
 import kh.s12.calendar.member.model.MemberVO;
 
-
-	@WebServlet("/main")
-	public class MainController extends HttpServlet {
+	@WebServlet("/main.lo")
+	public class MainLoadController extends HttpServlet {
 		private static final long serialVersionUID = 1L;
 	       
-	    public MainController() {
+	    public MainLoadController() {
 	        super();
 	    }
 
@@ -36,7 +35,7 @@ import kh.s12.calendar.member.model.MemberVO;
 				ArrayList<CalendarVO> vo = new ArrayList<CalendarVO>();
 				vo = cservice.callSchedule(mid);
 				
-				System.out.println("/calendar 컨트롤러");
+				System.out.println("/calendar.lo 컨트롤러");
 				System.out.println(vo);
 				
 				if(vo != null) {
@@ -47,8 +46,7 @@ import kh.s12.calendar.member.model.MemberVO;
 					out.append("fail");
 				}
 			}
-			String viewPage = "/WEB-INF/index.jsp";
-			request.getRequestDispatcher(viewPage).forward(request, response);
+			
 		}
 		
 		protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

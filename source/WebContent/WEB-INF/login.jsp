@@ -21,7 +21,7 @@
 	
 	<div id="section">
 		<div>
-			<form action="" method="">
+			<form>
 				<div><h2>로그인</h2></div>
 				<div>
 					<input class="" type="text" id="mail" name="mail" placeholder="이메일">

@@ -22,6 +22,7 @@ public class LoginDoController extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		MemberService mservice = new MemberService();
 		PrintWriter out = response.getWriter();
+		System.out.println("/login.do 컨트롤러");
 		
 		String mail = request.getParameter("mail");
 		String pw = request.getParameter("pw");

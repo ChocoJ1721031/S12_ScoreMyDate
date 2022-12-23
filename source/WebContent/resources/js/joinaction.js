@@ -52,7 +52,7 @@ window.onload = function() {
 			}
 			
 		} else {
-			$('#pwPopM').remove();
+			$('#pw2PopM').remove();
 		}
 	});
 	

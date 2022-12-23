@@ -4,24 +4,33 @@ public class CalendarVO {
 	private int snum;
 	private int mid;
 	private String scontent;
-	private String sdate;
 	private String sdate_start;
 	private String sdate_end;
 	
 	public CalendarVO() {
 		super();
 	}
-
-	public CalendarVO(int snum, int mid, String scontent, String sdate, String sdate_start, String sdate_end) {
+	
+	@Override
+	public String toString() {
+		if(sdate_end != null) {
+			return "{snum: \'" + snum + "\', title:\'" + scontent + "\', start:\'" + sdate_start
+				+ "\', end:\'" + sdate_end + "\'}";
+		} else {
+			return "{snum:\'" + snum + "\', title:\'" + scontent + "\', start:\'" + sdate_start
+					+ "\'}";
+		}
+		
+	}
+	public CalendarVO(int snum, int mid, String scontent, String sdate_start, String sdate_end) {
 		super();
 		this.snum = snum;
 		this.mid = mid;
 		this.scontent = scontent;
-		this.sdate = sdate;
 		this.sdate_start = sdate_start;
 		this.sdate_end = sdate_end;
 	}
-
+	
 	public int getSnum() {
 		return snum;
 	}
@@ -46,14 +55,6 @@ public class CalendarVO {
 		this.scontent = scontent;
 	}
 
-	public String getSdate() {
-		return sdate;
-	}
-
-	public void setSdate(String sdate) {
-		this.sdate = sdate;
-	}
-
 	public String getSdate_start() {
 		return sdate_start;
 	}
@@ -69,7 +70,5 @@ public class CalendarVO {
 	public void setSdate_end(String sdate_end) {
 		this.sdate_end = sdate_end;
 	}
-	
-	
 	
 }

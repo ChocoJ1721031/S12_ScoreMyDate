@@ -8,14 +8,40 @@
 <meta charset="UTF-8">
 
 <% MemberVO vo = (MemberVO) request.getSession().getAttribute("member"); %>
+<link rel="shortcut icon" href="#"> <!-- 브라우저 아이콘 -->
 <link rel='stylesheet' href='/resources/fullcalendar-5.11.3/lib/main.css'/>
 <link rel="stylesheet" href="/resources/css/reset.css"/>
 <link  rel='stylesheet' href='/resources/css/header.css'/>
 <link  rel='stylesheet' href='/resources/css/index.css'/>
 
+<script src='/resources/js/jquery-3.6.1.js'></script>
 <script src='/resources/fullcalendar-5.11.3/lib/main.js'></script>
-<script src='/resources/js/main.js'></script>
+<script src='/resources/js/index.js'></script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+	var calendarEl = document.getElementById('calendar');
+	var calendar = new FullCalendar.Calendar(calendarEl, {
+		initialDate: '2022-12-21',
+		headerToolbar: {
+			left: 'prev,next today',
+			center: 'title',
+			right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+		},
+		editable: true,
+		droppable: true,
+		drop: function(arg) {
+			if (document.getElementById('drop-remove').checked) {
+				arg.draggedEl.parentNode.removeChild(arg.draggedEl);
+			}
+		},
+		events: <%=session.getAttribute("list")%>
+	});
+	calendar.render();
+});
+
+
+</script>
 
 <title>Calendar</title>
 </head>
@@ -40,6 +66,9 @@
 		<div>
 			<div>
 				<form class="form-inline">
+					<%if(vo != null) {int mid = vo.getMid();%>
+					<input type="hidden" id="mid" name="mid" value="<%=mid%>">
+					<%}%>
 					<div>
 						<input type="text" name="search" placeholder="검색할 일정을 입력해주세요.">
 						<button type="button" id="searchBtn">검색</button>
