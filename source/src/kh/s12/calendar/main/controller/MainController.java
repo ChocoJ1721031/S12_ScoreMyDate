@@ -15,45 +15,44 @@ import kh.s12.calendar.main.model.CalendarService;
 import kh.s12.calendar.main.model.CalendarVO;
 import kh.s12.calendar.member.model.MemberVO;
 
+@WebServlet("/main")
+public class MainController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    public MainController() {
+        super();
+    }
 
-	@WebServlet("/main")
-	public class MainController extends HttpServlet {
-		private static final long serialVersionUID = 1L;
-	       
-	    public MainController() {
-	        super();
-	    }
-
-		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			HttpSession session = request.getSession();
-			CalendarService cservice = new CalendarService();
-			PrintWriter out = response.getWriter();
-			MemberVO mvo = (MemberVO) session.getAttribute("member");
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String viewPage = "/WEB-INF/index.jsp";
+		request.getRequestDispatcher(viewPage).forward(request, response);
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("application/json;charset=UTF-8");
+		
+		HttpSession session = request.getSession();
+		CalendarService cservice = new CalendarService();
+		PrintWriter out = response.getWriter();
+		MemberVO mvo = (MemberVO) session.getAttribute("member");
+		
+		if(mvo != null) {
+			int mid = mvo.getMid();
 			
-			if(mvo != null) {
-				int mid = mvo.getMid();
-				
-				ArrayList<CalendarVO> vo = new ArrayList<CalendarVO>();
-				vo = cservice.callSchedule(mid);
-				
-				System.out.println("/calendar 컨트롤러");
-				System.out.println(vo);
-				
-				if(vo != null) {
-					System.out.println("/main 스케줄 호출 성공!");
-					session.setAttribute("list", vo);
-				} else {
-					System.out.println("/main 스케줄 호출 실패!");
-					out.append("fail");
-				}
+			ArrayList<CalendarVO> vo = new ArrayList<CalendarVO>();
+			vo = cservice.callSchedule(mid);
+			
+			System.out.println("/main 컨트롤러");
+			
+			if(vo != null) {
+				System.out.println("/main 스케줄 호출 성공!");
+				session.setAttribute("list", vo);
+			} else {
+				System.out.println("/main 스케줄 호출 실패!");
+				out.append("fail");
 			}
-			String viewPage = "/WEB-INF/index.jsp";
-			request.getRequestDispatcher(viewPage).forward(request, response);
 		}
 		
-		protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			response.setContentType("application/json;charset=UTF-8");
-			doGet(request, response);
-		}
-
+		doGet(request, response);
+	}
 }

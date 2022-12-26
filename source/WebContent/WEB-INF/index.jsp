@@ -40,7 +40,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	calendar.render();
 });
 
-
 </script>
 
 <title>Calendar</title>
@@ -76,10 +75,38 @@ document.addEventListener('DOMContentLoaded', function() {
 				</form>
 			</div>
 			<div>
-				<!-- 검색을 안했다면 그냥 캘린더 출력, 검색했다면 리스트로 출력 -->
 				<div id='calendar'></div>
 			</div>
 		</div>
 	</div>
+
+	<div id="sModal_parent">
+		<div id="sModal_parent_2">
+			<div id="sModal">
+				<div id="sModal_content">
+					<div id="modalContent_1">
+						<div></div>
+						<span>대충 날짜</span>
+						<button type="button" id="close_sModal" onclick="close_sModal()"></button>
+					</div>
+					<div id="modalContent_2">
+						<div id="schedule_area">
+							
+						</div>
+						<div id="graph_area">
+							<div id="graph">Graph here</div>
+							<button type="button" id="serveyBtn" >설문조사 버튼</button>
+						</div>
+					</div>
+					<div id="modalContent_3">
+						<div id="diary_area">
+							<span id="diary">no text has written</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </body>
 </html>
