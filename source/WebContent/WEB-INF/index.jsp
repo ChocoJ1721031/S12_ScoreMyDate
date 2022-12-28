@@ -18,29 +18,6 @@
 <script src='/resources/fullcalendar-5.11.3/lib/main.js'></script>
 <script src='/resources/js/index.js'></script>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-	var calendarEl = document.getElementById('calendar');
-	var calendar = new FullCalendar.Calendar(calendarEl, {
-		initialDate: '2022-12-21',
-		headerToolbar: {
-			left: 'prev,next today',
-			center: 'title',
-			right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-		},
-		editable: true,
-		droppable: true,
-		drop: function(arg) {
-			if (document.getElementById('drop-remove').checked) {
-				arg.draggedEl.parentNode.removeChild(arg.draggedEl);
-			}
-		},
-		events: <%=session.getAttribute("list")%>
-	});
-	calendar.render();
-});
-
-</script>
 
 <title>Calendar</title>
 </head>
@@ -79,34 +56,5 @@ document.addEventListener('DOMContentLoaded', function() {
 			</div>
 		</div>
 	</div>
-
-	<div id="sModal_parent">
-		<div id="sModal_parent_2">
-			<div id="sModal">
-				<div id="sModal_content">
-					<div id="modalContent_1">
-						<div></div>
-						<span>대충 날짜</span>
-						<button type="button" id="close_sModal" onclick="close_sModal()"></button>
-					</div>
-					<div id="modalContent_2">
-						<div id="schedule_area">
-							
-						</div>
-						<div id="graph_area">
-							<div id="graph">Graph here</div>
-							<button type="button" id="serveyBtn" >설문조사 버튼</button>
-						</div>
-					</div>
-					<div id="modalContent_3">
-						<div id="diary_area">
-							<span id="diary">no text has written</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
 </body>
 </html>

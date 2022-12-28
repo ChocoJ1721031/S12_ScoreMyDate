@@ -3,34 +3,20 @@ package kh.s12.calendar.main.model;
 public class CalendarVO {
 	private int snum;
 	private int mid;
-	private String scontent;
-	private String sdate_start;
-	private String sdate_end;
+	private String title;
+	private String start;
+	private String end;
 	
 	public CalendarVO() {
 		super();
 	}
-	
+
 	@Override
 	public String toString() {
-		if(sdate_end != null) {
-			return "{snum: \'" + snum + "\', title:\'" + scontent + "\', start:\'" + sdate_start
-				+ "\', end:\'" + sdate_end + "\'}";
-		} else {
-			return "{snum:\'" + snum + "\', title:\'" + scontent + "\', start:\'" + sdate_start
-					+ "\'}";
-		}
-		
+		return "CalendarVO [snum=" + snum + ", mid=" + mid + ", title=" + title + ", start=" + start + ", end=" + end
+				+ "]";
 	}
-	public CalendarVO(int snum, int mid, String scontent, String sdate_start, String sdate_end) {
-		super();
-		this.snum = snum;
-		this.mid = mid;
-		this.scontent = scontent;
-		this.sdate_start = sdate_start;
-		this.sdate_end = sdate_end;
-	}
-	
+
 	public int getSnum() {
 		return snum;
 	}
@@ -47,28 +33,28 @@ public class CalendarVO {
 		this.mid = mid;
 	}
 
-	public String getScontent() {
-		return scontent;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setScontent(String scontent) {
-		this.scontent = scontent;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public String getSdate_start() {
-		return sdate_start;
+	public String getStart() {
+		return start;
 	}
 
-	public void setSdate_start(String sdate_start) {
-		this.sdate_start = sdate_start;
+	public void setStart(String start) {
+		this.start = start;
 	}
 
-	public String getSdate_end() {
-		return sdate_end;
+	public String getEnd() {
+		return end;
 	}
 
-	public void setSdate_end(String sdate_end) {
-		this.sdate_end = sdate_end;
+	public void setEnd(String end) {
+		this.end = end;
 	}
 	
 }

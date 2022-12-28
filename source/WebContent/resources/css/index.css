@@ -24,7 +24,7 @@
 #sModal_parent {
 	
 }
-#sModal_parent_2 {
+#sModal_parent_2, #sModal_parent_3 {
     opacity: 1;
     transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     height: 100%;
@@ -58,16 +58,16 @@
 }
 
 /*----------------------modalContent_1--------------------------*/
-#modalContent_1 {
+#modalContent_1, #modalContent_4, #modalContent_6 {
 	display: flex;
 	justify-content: space-between;
 }
 
-#close_sModal {
+#close_sModal, #close_add {
 	display:inline-block;*display:inline;
 	border-radius: 50%;
 }
-#close_sModal:after {
+#close_sModal:after, #close_add:after {
 	display: inline-block;content: "\00d7"; font-size:15pt;
 }
 
@@ -107,7 +107,7 @@
 	padding: 5px;
 }
 
-
+/*----------------------modalContent_5--------------------------*/
 
 
 

@@ -78,7 +78,7 @@ window.onload = function() {
 				alert("이메일 형식에 맞게 입력해 주세요.")
 			} else {
 				$.ajax({
-					url: "/dupchk.lo",
+					url: path+"/dupchk.lo",
 					type: "post",
 					async: false,
 					data: {
@@ -148,7 +148,7 @@ function codeBtn() {
 	var btn = document.getElementById('mailCodeBtn');
 	var chk = 0;
 	var mailCode;
-	var url = "/codeSend.lo";
+	var url = path+"/codeSend.lo";
 	var data;
 	function mailCode1(value) {
 		if (value === "fail") {
@@ -182,7 +182,7 @@ function codeBtn() {
 	}
 	
 	$.ajax({
-		url: url,
+		url: path+url,
 		type: "post",
 		async: false,
 		data: {
@@ -204,17 +204,17 @@ function codeBtn() {
 
 
 function main() {
-	location.href = "/main";
+	location.href = path+"/main";
 }
 function login() {
-	location.href = "/login";
+	location.href = path+"/login";
 }
 
 function join() {
 	var chk = 0;
 	if($('#mailOk').val() == 1 && $('#pw').val() != "" && $('#pw').val() == $('#pw2').val() && $('#mname').val() != null) {
 		$.ajax({
-			url: "/join.lo",
+			url: path+"/join.lo",
 			type: "post",
 			async: false,
 			data: {
@@ -251,7 +251,7 @@ function join() {
 	if (chk == 0) {
 		event.preventDefault();
 	} else if(chk == 1) {
-		location.href = "/login";
+		location.href = path+"/login";
 	}
 	
 }

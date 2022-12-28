@@ -35,7 +35,7 @@ public class MemberDAO {
 	}
 	
 	//회원가입
-	public int insertMember(Connection conn, MemberVO vo) {//TODO
+	public int insertMember(Connection conn, MemberVO vo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		int mid = midCreate(conn);

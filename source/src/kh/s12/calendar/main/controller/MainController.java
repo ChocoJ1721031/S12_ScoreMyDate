@@ -3,6 +3,8 @@ package kh.s12.calendar.main.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
 
 import kh.s12.calendar.main.model.CalendarService;
 import kh.s12.calendar.main.model.CalendarVO;
@@ -29,12 +33,15 @@ public class MainController extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("application/json;charset=UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
 		
+		Gson gson = new Gson();
+		Map<String, Object> map = new HashMap<String, Object>();
 		HttpSession session = request.getSession();
 		CalendarService cservice = new CalendarService();
 		PrintWriter out = response.getWriter();
 		MemberVO mvo = (MemberVO) session.getAttribute("member");
+		
 		
 		if(mvo != null) {
 			int mid = mvo.getMid();
@@ -46,13 +53,14 @@ public class MainController extends HttpServlet {
 			
 			if(vo != null) {
 				System.out.println("/main 스케줄 호출 성공!");
-				session.setAttribute("list", vo);
+				map.put("list", vo);
 			} else {
 				System.out.println("/main 스케줄 호출 실패!");
-				out.append("fail");
+				map.put("msg", "fail");
 			}
+			out.println(gson.toJson(map));
 		}
-		
-		doGet(request, response);
+		out.flush();
+		out.close();
 	}
 }

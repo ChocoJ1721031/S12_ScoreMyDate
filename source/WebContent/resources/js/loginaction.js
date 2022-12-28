@@ -4,7 +4,7 @@ window.onload = function() {
 		var pw = $('#pw').val();
 		var chk = 0;
 		$.ajax({
-			url: "/login.do",
+			url: path+"/login.do",
 			type: "post",
 			async: false,
 			data: {
@@ -25,16 +25,16 @@ window.onload = function() {
 		});
 		
 		if(chk == 1) {
-			location.href="/main";
+			location.href=path+"/main";
 		}
 		
 	});
 }
 
 function main() {
-	location.href = "/main";
+	location.href = path+"/main";
 }
 function join() {
-	location.href = "/join";
+	location.href = path+"/join";
 }
 
