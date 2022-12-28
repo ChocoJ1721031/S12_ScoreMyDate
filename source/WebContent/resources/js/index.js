@@ -71,7 +71,6 @@ window.onload = function() {
 	var selector;
 	$(document).on('click', '.fc-day', function() {
 		if(memberId != null) {
-			
 			selector = this;
 			dataDate = selector.dataset.date;
 			const modal_child_1 = '<div id="sModal_parent_2">'+
@@ -120,7 +119,6 @@ window.onload = function() {
 				dataType: "json",
 				success: function(value) {
 					console.log(value.list)
-					//var schedule = value.list.filter(it => new RegExp(dataDate).test(it.start));
 					schedule = value.list;
 					var schedule_area_2 = document.getElementById('schedule_area_2');
 					
@@ -130,7 +128,8 @@ window.onload = function() {
 								daySchedule = document.createElement('div');
 								daySchedule.setAttribute('id', 'schedule_'+j);
 								daySchedule.setAttribute('class', 'daySchedule');
-								daySchedule.innerText = schedule[j].title;
+								daySchedule.innerHTML = '<div class="daySchedule_title">'+schedule[j].title+'</div>'+
+														'<button type="button" class="delBtn" onclick="delSchedule(this)">-</button>';
 								daySchedule.dataset.start = schedule[j].start;
 								daySchedule.dataset.snum = schedule[j].snum;
 								
@@ -142,7 +141,8 @@ window.onload = function() {
 								daySchedule = document.createElement('div');
 								daySchedule.setAttribute('id', 'schedule_'+j);
 								daySchedule.setAttribute('class', 'daySchedule');
-								daySchedule.innerText = schedule[j].title;
+								daySchedule.innerHTML = '<div class="daySchedule_title">'+schedule[j].title+'</div>'+
+														'<button type="button" class="delBtn" onclick="delSchedule(this)">-</button>';
 								daySchedule.dataset.start = schedule[j].start;
 								daySchedule.dataset.end = schedule[j].end;
 								daySchedule.dataset.snum = schedule[j].snum;
@@ -159,12 +159,12 @@ window.onload = function() {
 	});
 	
 	
-	$(document).on('click', '.daySchedule', function() {
-		console.log(this);
-		var dataTitle = this.innerText;
-		var start = this.dataset.start;
-		var end = this.dataset.end;
-		var snum = parseInt(this.dataset.snum);
+	$(document).on('click', '.daySchedule_title', function() {
+		console.log($(this).text());
+		var dataTitle = $(this).text();
+		var start = $(this).parent().data("start");
+		var end = $(this).parent().data("end");
+		var snum = parseInt($(this).parent().data("snum"));
 		console.log(dataDate);
 		const modal_child_3 = '<div id="sModal_parent_4">'+
 				'<div id="sModal">'+
@@ -205,7 +205,6 @@ window.onload = function() {
 		});
 
 		$('#update').click(function(event) {
-			console.log("add btn");
 			if($('#end').val() === null || $('#end').val() === "") {
 				var data = {
 					snum: snum,
@@ -458,8 +457,10 @@ function reload_schedule() {
 						daySchedule = document.createElement('div');
 						daySchedule.setAttribute('id', 'schedule_'+j);
 						daySchedule.setAttribute('class', 'daySchedule');
-						daySchedule.innerText = schedule[j].title;
+						daySchedule.innerHTML = '<div class="daySchedule_title">'+schedule[j].title+'</div>'+
+												'<button type="button" class="delBtn" onclick="delSchedule(this)">-</button>';
 						daySchedule.dataset.start = schedule[j].start;
+						daySchedule.dataset.snum = schedule[j].snum;
 						
 						schedule_area_2.appendChild(daySchedule);
 					}
@@ -469,16 +470,91 @@ function reload_schedule() {
 						daySchedule = document.createElement('div');
 						daySchedule.setAttribute('id', 'schedule_'+j);
 						daySchedule.setAttribute('class', 'daySchedule');
-						daySchedule.innerText = schedule[j].title;
+						daySchedule.innerHTML = '<div class="daySchedule_title">'+schedule[j].title+'</div>'+
+												'<button type="button" class="delBtn" onclick="delSchedule(this)">-</button>';
 						daySchedule.dataset.start = schedule[j].start;
 						daySchedule.dataset.end = schedule[j].end;
+						daySchedule.dataset.snum = schedule[j].snum;
 						
 						schedule_area_2.appendChild(daySchedule);
 					}
+					
 				}
+				
 			}
 			
 		}
+	});
+}
+
+function delSchedule(e) {
+	let dataDate = $('#selecDate').val();
+	console.log($(e).parent().data('snum'));
+	console.log($('#mid').val());
+	$('.delBtn').click(function(event) {
+		$.ajax({
+			url: "/delSchedule.do",
+			type: "post",
+			async: false,
+			data: {
+				snum: $(e).parent().data('snum'),
+				mid: $('#mid').val()
+			},
+			dataType: "text",
+			success: function(value) {
+				console.log('value : '+value);
+				if(value === "fail") {
+					console.log("schedule add ERROR");
+					alert("ERROR : 스케줄 삭제에 실패하였습니다.");
+				} else {
+					alert("스케줄 삭제에 성공하였습니다.");
+				}
+				
+			},
+			error: function(event) {
+				console.log("스케줄 추가 실패");
+			}
+		});
+		console.log("됐냐?");
+		reload_schedule();
+		
+		var memberId = $('#mid').val();
+		$.ajax({
+			url: "/main",
+			type: "post",
+			async: false,
+			data: {
+				mid: memberId
+			},
+			dataType: "json",
+			success: function(value) {
+				let calendarEl = document.getElementById('calendar');
+				let calendar = new FullCalendar.Calendar(calendarEl, {
+					initialDate: '2022-12-21',
+					headerToolbar: {
+						left: 'prev next today',
+						center: 'title',
+						right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+					},
+					dayMaxEvents: true,
+					events: value.list
+				});
+				calendar.render();
+			},
+			error: function(event) {
+				let calendarEl = document.getElementById('calendar');
+				let calendar = new FullCalendar.Calendar(calendarEl, {
+					initialDate: '2022-12-21',
+					headerToolbar: {
+						left: 'prev, next today',
+						center: 'title',
+						right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+					},
+					dayMaxEvents: true
+				});
+				calendar.render();
+			}
+		});
 	});
 }
 

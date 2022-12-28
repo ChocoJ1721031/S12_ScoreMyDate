@@ -122,7 +122,18 @@ public class CalendarDAO {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		
+		String sql = "DELETE FROM SCHEDULE WHERE SNUM=? AND MID=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cvo.getSnum());
+			pstmt.setInt(2, cvo.getMid());
+			
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
 		
 		return result;
 	}
