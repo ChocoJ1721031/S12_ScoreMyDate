@@ -35,7 +35,7 @@ public class MemberDAO {
 	}
 	
 	//회원가입
-	public int insertMember(Connection conn, MemberVO vo) {
+	public int insertMember(Connection conn, MemberVO mvo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		int mid = midCreate(conn);
@@ -45,10 +45,10 @@ public class MemberDAO {
 			try {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, mid);
-				pstmt.setString(2, vo.getMemail());
-				pstmt.setString(3, vo.getMpwd());
-				pstmt.setString(4, vo.getMname());
-				pstmt.setString(5, vo.getMip());
+				pstmt.setString(2, mvo.getMemail());
+				pstmt.setString(3, mvo.getMpwd());
+				pstmt.setString(4, mvo.getMname());
+				pstmt.setString(5, mvo.getMip());
 				
 				result = pstmt.executeUpdate();
 			}catch (Exception e) {
@@ -104,19 +104,48 @@ public class MemberDAO {
 			JDBCTemplate.close(rs);
 			JDBCTemplate.close(pstmt);
 		}
-		// result > 1 : 이메일 사용중
-		// result == 0 : 이메일 사용 가능
+		
 		return result;
 	}
 	
-	public int update(Connection conn, MemberVO vo) {
-		//TODO
-		return 0;
+	public int updateMember(Connection conn, MemberVO mvo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = "UPDATE MEMBER SET MNAME=?, MPWD=? WHERE MID=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mvo.getMname());
+			pstmt.setString(1, mvo.getMpwd());
+			pstmt.setInt(1, mvo.getMid());
+			
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
 	}
 	
 	
-	public int delete(Connection conn, String id) {
-		//TODO
-		return 0;
+	public int deleteMember(Connection conn, String memail) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = "DELETE FROM MEMBER WHERE MEMAIL=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memail);
+			
+			result = pstmt.executeUpdate();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
 	}
 }

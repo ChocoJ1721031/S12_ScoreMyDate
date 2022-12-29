@@ -41,8 +41,46 @@ public class MemberService {
 		return result;
 	}
 	
-
+	public int updateMember(MemberVO mvo, String inputPwd, String inputMname) {
+		Connection conn = getConnection();
+		String origPwd = mvo.getMpwd();
+		int result = 0;
+		
+		if(inputPwd.equals(origPwd)) {
+			mvo.setMpwd(inputPwd);
+			mvo.setMname(inputMname);
+			
+			result = new MemberDAO().updateMember(conn, mvo);
+		} else {
+			//대충 비번 틀리다는 얘기
+		}
+		
+		
+		if(result > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		return result;
+	}
 	
+	public int deleteMember(MemberVO mvo, String inputPwd) {
+		Connection conn = getConnection();
+		int result = 0;
+		if(inputPwd.equals(mvo.getMpwd())) {
+			String memail = mvo.getMemail();
+			result = new MemberDAO().deleteMember(conn, memail);
+			
+			if(result > 0) {
+				JDBCTemplate.commit(conn);
+			} else {
+				JDBCTemplate.rollback(conn);
+			}
+		}
+		
+		return result;
+	}
 	
 	
 }

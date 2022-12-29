@@ -10,12 +10,6 @@ window.onload = function() {
 		},
 		dataType: "json",
 		success: function(value) {
-			if (value.msg == 'fail') {
-
-			} else {
-				// TODO: value.list 들어있는 
-
-			}
 			let calendarEl = document.getElementById('calendar');
 			let calendar = new FullCalendar.Calendar(calendarEl, {
 				initialDate: '2022-12-21',
