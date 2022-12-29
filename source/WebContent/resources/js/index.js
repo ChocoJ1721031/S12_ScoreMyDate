@@ -491,70 +491,68 @@ function delSchedule(e) {
 	let dataDate = $('#selecDate').val();
 	console.log($(e).parent().data('snum'));
 	console.log($('#mid').val());
-	$('.delBtn').click(function(event) {
-		$.ajax({
-			url: "/delSchedule.do",
-			type: "post",
-			async: false,
-			data: {
-				snum: $(e).parent().data('snum'),
-				mid: $('#mid').val()
-			},
-			dataType: "text",
-			success: function(value) {
-				console.log('value : '+value);
-				if(value === "fail") {
-					console.log("schedule add ERROR");
-					alert("ERROR : 스케줄 삭제에 실패하였습니다.");
-				} else {
-					alert("스케줄 삭제에 성공하였습니다.");
-				}
-				
-			},
-			error: function(event) {
-				console.log("스케줄 추가 실패");
+	$.ajax({
+		url: "/delSchedule.do",
+		type: "post",
+		async: false,
+		data: {
+			snum: $(e).parent().data('snum'),
+			mid: $('#mid').val()
+		},
+		dataType: "text",
+		success: function(value) {
+			console.log('value : '+value);
+			if(value === "fail") {
+				console.log("schedule add ERROR");
+				alert("ERROR : 스케줄 삭제에 실패하였습니다.");
+			} else {
+				alert("스케줄 삭제에 성공하였습니다.");
 			}
-		});
-		console.log("됐냐?");
-		reload_schedule();
-		
-		var memberId = $('#mid').val();
-		$.ajax({
-			url: "/main",
-			type: "post",
-			async: false,
-			data: {
-				mid: memberId
-			},
-			dataType: "json",
-			success: function(value) {
-				let calendarEl = document.getElementById('calendar');
-				let calendar = new FullCalendar.Calendar(calendarEl, {
-					initialDate: '2022-12-21',
-					headerToolbar: {
-						left: 'prev next today',
-						center: 'title',
-						right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-					},
-					dayMaxEvents: true,
-					events: value.list
-				});
-				calendar.render();
-			},
-			error: function(event) {
-				let calendarEl = document.getElementById('calendar');
-				let calendar = new FullCalendar.Calendar(calendarEl, {
-					initialDate: '2022-12-21',
-					headerToolbar: {
-						left: 'prev, next today',
-						center: 'title',
-						right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-					},
-					dayMaxEvents: true
-				});
-				calendar.render();
-			}
-		});
+			
+		},
+		error: function(event) {
+			console.log("스케줄 추가 실패");
+		}
+	});
+	console.log("됐냐?");
+	reload_schedule();
+	
+	var memberId = $('#mid').val();
+	$.ajax({
+		url: "/main",
+		type: "post",
+		async: false,
+		data: {
+			mid: memberId
+		},
+		dataType: "json",
+		success: function(value) {
+			let calendarEl = document.getElementById('calendar');
+			let calendar = new FullCalendar.Calendar(calendarEl, {
+				initialDate: '2022-12-21',
+				headerToolbar: {
+					left: 'prev next today',
+					center: 'title',
+					right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+				},
+				dayMaxEvents: true,
+				events: value.list
+			});
+			calendar.render();
+		},
+		error: function(event) {
+			let calendarEl = document.getElementById('calendar');
+			let calendar = new FullCalendar.Calendar(calendarEl, {
+				initialDate: '2022-12-21',
+				headerToolbar: {
+					left: 'prev, next today',
+					center: 'title',
+					right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+				},
+				dayMaxEvents: true
+			});
+			calendar.render();
+		}
 	});
 }
 
