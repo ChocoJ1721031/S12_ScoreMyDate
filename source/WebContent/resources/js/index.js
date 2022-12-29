@@ -28,7 +28,7 @@ window.onload = function() {
 			let calendar = new FullCalendar.Calendar(calendarEl, {
 				initialDate: '2022-12-21',
 				headerToolbar: {
-					left: 'prev, next today',
+					left: 'prev next today',
 					center: 'title',
 					right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 				},
@@ -37,33 +37,10 @@ window.onload = function() {
 			calendar.render();
 		}
 	});
-
-	$('#searchBtn').click(function() {
-		$.ajax({
-			url: "/scheduleSearch.lo",
-			type: "post",
-			async: false,
-			data: {
-
-			},
-			dataType: "text",
-			success: function(value) {
-				if (value === "fail") {
-					alert("");
-				} else {
-					alert("");
-					chk++;
-				}
-			},
-			error: function(request, status, error) {
-				alert("code" + request.status + "\n" + "message : " + request.responseText + "\nerror" + error);
-			}
-		});
-	});
 	
 	var dataDate;
 	var selector;
-	$(document).on('click', '.fc-day', function() {
+	$(document).on('click', '.fc-daygrid-day', function() { //날짜 상세보기
 		if(memberId != null) {
 			selector = this;
 			dataDate = selector.dataset.date;
@@ -94,7 +71,7 @@ window.onload = function() {
 						'</div>'+
 					'</div>'+
 				'</div>';
-			//여기서부턴 모달박스 생성 후 ajax를 이용해 insert, delete, update 구현
+				
 			var scheduleModal_parent = document.getElementsByTagName('body')[0];
 			var scheduleModal_background = document.createElement('div'); //모달박스의 부모태그
 			scheduleModal_background.setAttribute('id', 'sModal_parent');
@@ -153,7 +130,7 @@ window.onload = function() {
 	});
 	
 	
-	$(document).on('click', '.daySchedule_title', function() {
+	$(document).on('click', '.daySchedule_title', function() { //스케줄 수정
 		console.log($(this).text());
 		var dataTitle = $(this).text();
 		var start = $(this).parent().data("start");
@@ -171,7 +148,6 @@ window.onload = function() {
 							'</div>'+
 							'<div id="modalContent_7">'+
 								'<div>'+
-									//'<input type="hidden" id="snum" name="snum" value="'+snum+'">'+
 									'<input type="date" id="start" class="input_date" name="start" value="'+start+'">'+
 									'<span>~</span>'+
 									'<input type="date" id="end" class="input_date" name="end" value="'+end+'">'+
@@ -187,15 +163,27 @@ window.onload = function() {
 						'</form>'+
 					'</div>'+
 				'</div>'+
-
 			'</div>';
 			
 		document.getElementById('sModal_parent').innerHTML += modal_child_3;
-		$('#sModal_parent_2').css.display = "hidden";
+		
+		if($('#sModal_parent_2').length) {
+			$('#sModal_parent_2').css.display = "hidden";
+		} else if($('#sModal_parent_5').length) {
+			$('#sModal_parent_5').css.display = "hidden";
+		}
+		
+		
 		
 		$(document).on('click', '#close_add', function() {
 			$('#sModal_parent_4').remove();
-			$('#sModal_parent_2').css.display = "flex";
+			
+			if($('#sModal_parent_2').length) {
+				$('#sModal_parent_2').css.display = "flex";
+			} else if($('#sModal_parent_5').length) {
+				$('#sModal_parent_5').css.display = "flex";
+			}
+			
 		});
 
 		$('#update').click(function(event) {
@@ -229,7 +217,14 @@ window.onload = function() {
 					} else {
 						$(function() {
 							$('#sModal_parent_4').remove();
-							$('#sModal_parent_2').css.display = "flex";
+							
+							if($('#sModal_parent_2').length) {
+								$('#sModal_parent_2').css.display = "flex";
+								
+							} else if($('#sModal_parent_5').length) {
+								$('#sModal_parent_5').css.display = "flex";
+							}
+							
 						});
 						reload_schedule();
 					}
@@ -268,7 +263,7 @@ window.onload = function() {
 					let calendar = new FullCalendar.Calendar(calendarEl, {
 						initialDate: '2022-12-21',
 						headerToolbar: {
-							left: 'prev, next today',
+							left: 'prev next today',
 							center: 'title',
 							right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 						},
@@ -296,7 +291,7 @@ window.onload = function() {
 
 
 
-function addSchedule(dataDate) {
+function addSchedule(dataDate) { // 스케줄 추가
 	var dataDate = $('#selecDate').val();
 	console.log(dataDate);
 	const modal_child_2 = '<div id="sModal_parent_3">'+
@@ -403,7 +398,7 @@ function addSchedule(dataDate) {
 				let calendar = new FullCalendar.Calendar(calendarEl, {
 					initialDate: '2022-12-21',
 					headerToolbar: {
-						left: 'prev, next today',
+						left: 'prev next today',
 						center: 'title',
 						right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 					},
@@ -426,59 +421,65 @@ function close_sModal() {
 
 function reload_schedule() {
 	var dataDate = $('#selecDate').val();
-	$.ajax({
-		url: "/main",
-		type: "post",
-		async: false,
-		data: {
-			mid: memberId
-		},
-		dataType: "json",
-		success: function(value) {
-			console.log(value.list)
-			//var schedule = value.list.filter(it => new RegExp(dataDate).test(it.start));
-			schedule = value.list;
-			var schedule_area_2 = document.getElementById('schedule_area_2');
-			
-			while(schedule_area_2.firstChild) {
-				schedule_area_2.removeChild(schedule_area_2.firstChild);	
-			}
-			
-			
-			for(var j=0; j<schedule.length; j++) {
-				if(schedule[j].end === undefined) {
-					if(dataDate === schedule[j].start) {
-						daySchedule = document.createElement('div');
-						daySchedule.setAttribute('id', 'schedule_'+j);
-						daySchedule.setAttribute('class', 'daySchedule');
-						daySchedule.innerHTML = '<div class="daySchedule_title">'+schedule[j].title+'</div>'+
-												'<button type="button" class="delBtn" onclick="delSchedule(this)">-</button>';
-						daySchedule.dataset.start = schedule[j].start;
-						daySchedule.dataset.snum = schedule[j].snum;
+	if($('#sModal_parent_5').length) {
+		$('#sModal_parent').remove();
+		searchSchedule();
+	} else {
+		$.ajax({
+			url: "/main",
+			type: "post",
+			async: false,
+			data: {
+				mid: memberId
+			},
+			dataType: "json",
+			success: function(value) {
+				console.log(value.list)
+				//var schedule = value.list.filter(it => new RegExp(dataDate).test(it.start));
+				schedule = value.list;
+				var schedule_area_2 = document.getElementById('schedule_area_2');
+				
+				while(schedule_area_2.firstChild) {
+					schedule_area_2.removeChild(schedule_area_2.firstChild);	
+				}
+				
+				
+				for(var j=0; j<schedule.length; j++) {
+					if(schedule[j].end === undefined) {
+						if(dataDate === schedule[j].start) {
+							daySchedule = document.createElement('div');
+							daySchedule.setAttribute('id', 'schedule_'+j);
+							daySchedule.setAttribute('class', 'daySchedule');
+							daySchedule.innerHTML = '<div class="daySchedule_title">'+schedule[j].title+'</div>'+
+													'<button type="button" class="delBtn" onclick="delSchedule(this)">-</button>';
+							daySchedule.dataset.start = schedule[j].start;
+							daySchedule.dataset.snum = schedule[j].snum;
+							
+							schedule_area_2.appendChild(daySchedule);
+						}
 						
-						schedule_area_2.appendChild(daySchedule);
-					}
-					
-				} else {
-					if(dataDate >= schedule[j].start && dataDate <= schedule[j].end) {
-						daySchedule = document.createElement('div');
-						daySchedule.setAttribute('id', 'schedule_'+j);
-						daySchedule.setAttribute('class', 'daySchedule');
-						daySchedule.innerHTML = '<div class="daySchedule_title">'+schedule[j].title+'</div>'+
-												'<button type="button" class="delBtn" onclick="delSchedule(this)">-</button>';
-						daySchedule.dataset.start = schedule[j].start;
-						daySchedule.dataset.end = schedule[j].end;
-						daySchedule.dataset.snum = schedule[j].snum;
+					} else {
+						if(dataDate >= schedule[j].start && dataDate <= schedule[j].end) {
+							daySchedule = document.createElement('div');
+							daySchedule.setAttribute('id', 'schedule_'+j);
+							daySchedule.setAttribute('class', 'daySchedule');
+							daySchedule.innerHTML = '<div class="daySchedule_title">'+schedule[j].title+'</div>'+
+													'<button type="button" class="delBtn" onclick="delSchedule(this)">-</button>';
+							daySchedule.dataset.start = schedule[j].start;
+							daySchedule.dataset.end = schedule[j].end;
+							daySchedule.dataset.snum = schedule[j].snum;
+							
+							schedule_area_2.appendChild(daySchedule);
+						}
 						
-						schedule_area_2.appendChild(daySchedule);
 					}
 					
 				}
 				
 			}
-			
-		}
-	});
+		});
+	}
+	
 }
 
 function delSchedule(e) {
@@ -508,7 +509,6 @@ function delSchedule(e) {
 			console.log("스케줄 추가 실패");
 		}
 	});
-	console.log("됐냐?");
 	reload_schedule();
 	
 	var memberId = $('#mid').val();
@@ -548,6 +548,94 @@ function delSchedule(e) {
 			calendar.render();
 		}
 	});
+}
+
+function searchSchedule() {
+	let searchInput = document.getElementById('searchInput');
+	if(searchInput.value !== "" && $('#mid').length) {
+		$.ajax({
+			url: "/searchSchedule.do",
+			type: "post",
+			async: false,
+			data: {
+				searchInput: searchInput.value
+			},
+			dataType: "json",
+			success: function(value) {
+				if(value === "fail") {
+					alert("검색 결과가 없습니다.");
+				} else {
+					searchModal(value.searchList);
+					
+				}				
+			},
+			error: function(request, status, error) {
+				alert("code" + request.status + "\n" + "message : " + request.responseText + "\nerror" + error);
+			}
+		});
+	}
+	
+}
+
+function searchModal(e) { // 스케줄 검색
+	console.log(e);
+	
+	const modal_child_4 = '<div id="sModal_parent_5">'+
+			'<div id="sModal">'+
+				'<div id="sModal_content">'+
+					'<div id="modalContent_1">'+
+						'<div></div>'+
+						'<span></span>'+
+						'<button type="button" id="close_sModal" onclick="close_sModal()"></button>'+
+					'</div>'+
+					'<div id="modalContent_8">'+
+					'</div>'+
+				'</div>'+
+			'</div>'+
+		'</div>';
+		
+	var scheduleModal_parent = document.getElementsByTagName('body')[0];
+	var scheduleModal_background = document.createElement('div'); //모달박스의 부모태그
+	scheduleModal_background.setAttribute('id', 'sModal_parent');
+	scheduleModal_parent.appendChild(scheduleModal_background);//생성
+	
+	scheduleModal_background.innerHTML = modal_child_4;
+	
+	var modalContent_8 = document.getElementById('modalContent_8');
+	
+	
+	
+	for(var k=0; k<e.length; k++) {
+		var scheduleList = document.createElement('div');
+		scheduleList.setAttribute('class', 'scheduleList');
+		scheduleList.setAttribute('id', 'scheduleList_'+k);
+		scheduleList.dataset.start = e[k].start;
+		scheduleList.dataset.title = e[k].title;
+		scheduleList.dataset.snum = e[k].snum;
+		
+		modalContent_8.appendChild(scheduleList);
+		
+		var scheduleDate = document.createElement('div');
+		scheduleDate.setAttribute('class', 'scheduleDate');
+		scheduleDate.setAttribute('id', 'scheduleDate_'+k);
+		
+		scheduleList.appendChild(scheduleDate);
+		
+		var scheduleTitle = document.createElement('div');
+		scheduleTitle.setAttribute('class', 'daySchedule_title');
+		
+		
+		if(e[k].end !== "" && e[k].end !== undefined) {
+			scheduleDate.innerHTML = e[k].start+" ~ "+e[k].end;
+			scheduleList.dataset.end = e[k].end;
+		} else {
+			scheduleDate.innerHTML = e[k].start;
+		}
+		
+		scheduleList.appendChild(scheduleTitle);
+		scheduleTitle.innerHTML = e[k].title;
+	}
+	
 }
 
 function login() {

@@ -41,15 +41,15 @@
 	<div id="section">
 		<div>
 			<div>
-				<form class="form-inline">
+				<div class="form-inline">
 					<%if(vo != null) {int mid = vo.getMid();%>
 					<input type="hidden" id="mid" name="mid" value="<%=mid%>">
 					<%}%>
 					<div>
-						<input type="text" name="search" placeholder="검색할 일정을 입력해주세요.">
-						<button type="button" id="searchBtn">검색</button>
+						<input type="text" id="searchInput" name="searchInput" placeholder="검색할 일정을 입력해주세요.">
+						<button type="button" id="searchBtn" onclick="searchSchedule()">검색</button>
 					</div>
-				</form>
+				</div>
 			</div>
 			<div>
 				<div id='calendar'></div>

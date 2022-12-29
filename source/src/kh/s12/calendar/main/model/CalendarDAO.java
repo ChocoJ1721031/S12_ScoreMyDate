@@ -138,5 +138,36 @@ public class CalendarDAO {
 		return result;
 	}
 	
-	
+	public static ArrayList<CalendarVO> searchSchedule(Connection conn, int mid, String searchInput) {
+		CalendarVO vo = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<CalendarVO> searchList = new ArrayList<CalendarVO>();
+		
+		String sql = "SELECT SNUM, MID, SCONTENT, TO_CHAR(TO_DATE(SDATE_START, 'YY-MM-DD'), 'YYYY-MM-DD') AS SDATE_START , TO_CHAR(TO_DATE(SDATE_END, 'YY-MM-DD'), 'YYYY-MM-DD') AS SDATE_END FROM SCHEDULE";
+				sql += " WHERE MID=? AND (SCONTENT LIKE '%"+searchInput+"%') ORDER BY SDATE_START DESC";
+				
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, mid);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				vo = new CalendarVO();
+				vo.setSnum(rs.getInt(1));
+				vo.setMid(rs.getInt(2));
+				vo.setTitle(rs.getString(3));
+				vo.setStart(rs.getString(4));
+				vo.setEnd(rs.getString(5));
+				searchList.add(vo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return searchList;
+	}
 }

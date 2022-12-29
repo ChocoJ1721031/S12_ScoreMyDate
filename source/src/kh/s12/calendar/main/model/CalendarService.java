@@ -62,6 +62,18 @@ public class CalendarService {
 		return result;
 	}
 	
+	public ArrayList<CalendarVO> searchSchedule(int mid, String searchInput) {
+		Connection conn = getConnection();
+		ArrayList<CalendarVO> searchList = null;
+		
+		if(searchInput != null || !searchInput.equals("")) {
+			searchList = CalendarDAO.searchSchedule(conn, mid, searchInput);
+		}
+		
+		close(conn);
+		
+		return searchList;
+	}
 	
 	
 }
