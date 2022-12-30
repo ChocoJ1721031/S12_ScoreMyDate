@@ -26,7 +26,7 @@ public class AddScheduleController extends HttpServlet {
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
 		MemberVO mvo = (MemberVO) session.getAttribute("member");
-		CalendarService sservice = new CalendarService();
+		CalendarService cservice = new CalendarService();
 		CalendarVO cvo = new CalendarVO(); 
 		
 		int mid = mvo.getMid();
@@ -39,7 +39,7 @@ public class AddScheduleController extends HttpServlet {
 		cvo.setStart(start);
 		cvo.setEnd(end);
 		
-		int result = sservice.insertSchedule(cvo);
+		int result = cservice.insertSchedule(cvo);
 		
 		if(result > 0) {
 			System.out.println("스케줄 insert 성공");

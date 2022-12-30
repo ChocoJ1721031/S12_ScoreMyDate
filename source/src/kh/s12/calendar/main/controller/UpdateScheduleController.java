@@ -26,7 +26,7 @@ public class UpdateScheduleController extends HttpServlet {
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
 		MemberVO mvo = (MemberVO) session.getAttribute("member");
-		CalendarService sservice = new CalendarService();
+		CalendarService cservice = new CalendarService();
 		CalendarVO cvo = new CalendarVO(); 
 		
 		int snum = Integer.parseInt(request.getParameter("snum")) ;
@@ -41,7 +41,7 @@ public class UpdateScheduleController extends HttpServlet {
 		cvo.setStart(start);
 		cvo.setEnd(end);
 		
-		int result = sservice.updateSchedule(cvo);
+		int result = cservice.updateSchedule(cvo);
 		
 		if(result > 0) {
 			System.out.println("스케줄 update 성공");

@@ -22,7 +22,7 @@ public class DeleteScheduleController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		CalendarService sservice = new CalendarService();
+		CalendarService cservice = new CalendarService();
 		CalendarVO cvo = new CalendarVO(); 
 		
 		int snum = Integer.parseInt(request.getParameter("snum")) ;
@@ -31,7 +31,7 @@ public class DeleteScheduleController extends HttpServlet {
 		cvo.setSnum(snum);
 		cvo.setMid(mid);
 		
-		int result = sservice.deleteSchedule(cvo);
+		int result = cservice.deleteSchedule(cvo);
 		
 		if(result > 0) {
 			System.out.println("스케줄 delete 성공");
