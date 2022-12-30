@@ -14,6 +14,7 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.js"></script>
 <script type="text/javascript" src="/resources/js/joinaction.js"></script>
+<script type="text/javascript" src="/resources/js/header.js"></script>
 
 </head>
 <body>

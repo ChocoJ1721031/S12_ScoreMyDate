@@ -9,20 +9,11 @@ import java.util.ArrayList;
 import kh.s12.calendar.jdbcDriver.JDBCTemplate;
 
 public class ServeyService {
-	public int checkServey(String dDate, int mid) { //설문여부 확인
+	public int checkServey(ServeyVO svo) { //설문여부 확인
 		int result = 0;
 		Connection conn = getConnection();
-		
-		result = ServeyDAO.checkServey(conn, dDate, mid);
-		
-		if(result > 0) {
-			JDBCTemplate.commit(conn);
-		} else {
-			JDBCTemplate.rollback(conn);
-		}
-		
+		result = ServeyDAO.checkServey(conn, svo);
 		JDBCTemplate.close(conn);
-		
 		return result;
 	}
 	
@@ -30,10 +21,10 @@ public class ServeyService {
 		int result = 0;
 		Connection conn = getConnection();
 		
-		result = ServeyDAO.insertServeyContent(conn, scvo);
+		result = ServeyDAO.insertServey(conn, svo);
 		if(result > 0) {
 			result = 0;
-			result = ServeyDAO.insertServey(conn, svo);
+			result = ServeyDAO.insertServeyContent(conn, scvo);
 			
 			if(result > 0) {
 				JDBCTemplate.commit(conn);

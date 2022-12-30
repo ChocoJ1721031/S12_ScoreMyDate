@@ -60,7 +60,7 @@ window.onload = function() {
 								'</div>'+
 								'<div id="graph_area">'+
 									'<div id="graph">Graph here</div>'+
-									'<button type="button" id="serveyBtn">설문조사 버튼</button>'+
+									'<button type="button" id="serveyBtn" onclick="servey()">설문조사 버튼</button>'+
 								'</div>'+
 							'</div>'+
 							'<div id="modalContent_3">'+
@@ -638,12 +638,55 @@ function searchModal(e) { // 스케줄 검색
 	
 }
 
-function login() {
-	location.href = "/login";
+function servey() {
+	let date= $('#selecDate').val();
+	let chk = 0;
+	$.ajax({
+		url: "/checkServey.do",
+		type: "post",
+		async: false,
+		data: {
+			date: date,
+			mid: $('#mid').val()
+		},
+		dataType: "text",
+		success: function(value) {
+			if(value === "yes") {
+				alert("이미 설문이 작성되었습니다.");
+			} else {
+				chk++;
+			}				
+		},
+		error: function(request, status, error) {
+			alert("code" + request.status + "\n" + "message : " + request.responseText + "\nerror" + error);
+		}		
+	});
+	
+	if(chk == 1) {
+		location.href= "/servey";
+	}
 }
-function logout() {
-	location.href = "/logout.do";
+
+function getServey() {
+	$.ajax({
+		url: "/checkServey.do",
+		type: "post",
+		async: false,
+		data: {
+			date: date,
+			mid: $('#mid').val()
+		},
+		dataType: "json",
+		success: function(value) {
+			if(value === "yes") {
+				alert("이미 설문이 작성되었습니다.");
+			} else {
+				chk++;
+			}				
+		},
+		error: function(request, status, error) {
+			alert("code" + request.status + "\n" + "message : " + request.responseText + "\nerror" + error);
+		}		
+	});
 }
-function myPage() {
-	location.href = "/myPage";
-}
+

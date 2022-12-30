@@ -24,18 +24,16 @@ public class InsertServeyDoController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
-		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
-		MemberVO mvo = (MemberVO) session.getAttribute("member");
 		ServeyService sservice = new ServeyService();
 		ServeyVO svo = new ServeyVO();
 		ServeyContentVO scvo = new ServeyContentVO();
 		
-		svo.setMid(mvo.getMid());
+		svo.setMid(Integer.parseInt(request.getParameter("mid")));
 		svo.setdDate(request.getParameter("date"));
 		
 		scvo.setdDate(request.getParameter("date"));
-		scvo.setMid(mvo.getMid());
+		scvo.setMid(Integer.parseInt(request.getParameter("mid")));
 		scvo.setSer_1(Integer.parseInt(request.getParameter("q_1")));
 		scvo.setSer_2(Integer.parseInt(request.getParameter("q_2")));
 		scvo.setSer_3(Integer.parseInt(request.getParameter("q_3")));
@@ -44,6 +42,8 @@ public class InsertServeyDoController extends HttpServlet {
 		scvo.setScore_1(Integer.parseInt(request.getParameter("score")));
 		scvo.setSer_diary(request.getParameter("diary"));
 
+		System.out.println(svo);
+		System.out.println(scvo);
 		int result = sservice.insertServey(scvo, svo);
 		
 		if(result > 0) {

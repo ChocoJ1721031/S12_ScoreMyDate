@@ -9,6 +9,7 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.js"></script>
 <script type="text/javascript" src="/resources/js/loginaction.js"></script>
+<script type="text/javascript" src="/resources/js/header.js"></script>
 <script type="text/javascript">
 var path="<%=request.getContextPath()%>";
 </script>

@@ -31,10 +31,3 @@ window.onload = function() {
 	});
 }
 
-function main() {
-	location.href = path+"/main";
-}
-function join() {
-	location.href = path+"/join";
-}
-

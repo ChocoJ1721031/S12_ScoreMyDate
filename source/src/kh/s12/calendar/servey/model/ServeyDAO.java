@@ -9,7 +9,7 @@ import kh.s12.calendar.jdbcDriver.JDBCTemplate;
 
 public class ServeyDAO {
 
-	public static int checkServey(Connection conn, String dDate, int mid) {
+	public static int checkServey(Connection conn, ServeyVO svo) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -17,12 +17,12 @@ public class ServeyDAO {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, dDate);
-			pstmt.setInt(1, mid);
+			pstmt.setString(1, svo.getdDate());
+			pstmt.setInt(2, svo.getMid());
 			
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				if(rs.getString(3) == "Y" || rs.getString(3).equals("Y")) {
+				if(rs.getString(1) == "Y" || rs.getString(1).equals("Y")) {
 					result = 1;
 				}
 			}
@@ -39,7 +39,7 @@ public class ServeyDAO {
 	public static int insertServey(Connection conn, ServeyVO svo) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String sql = "INSERT INTO SERVEY_DATE VALUES(DDATE=?, MID=?, DSERVEY='Y')";
+		String sql = "INSERT INTO SERVEY_DATE VALUES(?, ?, 'Y')";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, svo.getdDate());
@@ -58,7 +58,7 @@ public class ServeyDAO {
 	public static int insertServeyContent(Connection conn, ServeyContentVO scvo) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String sql = "INSERT INTO SERVEY_CONTENT VALUES(DDATE=?, MID=?, SER_1=?, SER_2=?, SER_3=?, SER_4=?, SER_5=?, SER_SCORE_1=?, SER_CONTENT=?)";
+		String sql = "INSERT INTO SERVEY_CONTENT VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, scvo.getdDate());

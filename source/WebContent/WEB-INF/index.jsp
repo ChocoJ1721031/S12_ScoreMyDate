@@ -17,6 +17,7 @@
 <script src='/resources/js/jquery-3.6.1.js'></script>
 <script src='/resources/fullcalendar-5.11.3/lib/main.js'></script>
 <script src='/resources/js/index.js'></script>
+<script src='/resources/js/header.js'></script>
 
 
 <title>Calendar</title>
@@ -35,6 +36,9 @@
 				<button type="button" onclick="myPage()">마이페이지</button>
 			</div>
 			<%}%>
+			<%if(vo != null) {int mid = vo.getMid();%>
+			<input type="hidden" id="mid" name="mid" value="<%=mid%>">
+			<%}%>
 		</div>
 	</div>
 
@@ -42,9 +46,6 @@
 		<div>
 			<div>
 				<div class="form-inline">
-					<%if(vo != null) {int mid = vo.getMid();%>
-					<input type="hidden" id="mid" name="mid" value="<%=mid%>">
-					<%}%>
 					<div>
 						<input type="text" id="searchInput" name="searchInput" placeholder="검색할 일정을 입력해주세요.">
 						<button type="button" id="searchBtn" onclick="searchSchedule()">검색</button>
