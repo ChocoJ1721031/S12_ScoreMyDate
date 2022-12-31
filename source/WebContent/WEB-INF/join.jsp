@@ -20,7 +20,7 @@
 <body>
 	<div id="header">
 		<div>
-			<h1>Score My Date</h1>
+			<h1 onclick="main()">Score My Date</h1>
 			<div>
 				<button type="button" onclick="login()">로그인</button>
 				<button type="button" onclick="main()">홈</button>

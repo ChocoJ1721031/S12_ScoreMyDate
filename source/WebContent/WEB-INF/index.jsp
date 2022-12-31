@@ -24,7 +24,7 @@
 <body>
 	<div id="header">
 		<div>
-			<h1>Score My Day</h1>
+			<h1 onclick="main()">Score My Day</h1>
 			<% if(vo == null){ %>
 			<div>
 				<button type="button" onclick="login()">로그인</button>

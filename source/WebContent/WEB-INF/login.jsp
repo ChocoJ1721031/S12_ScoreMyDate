@@ -16,7 +16,7 @@ var path="<%=request.getContextPath()%>";
 </head>
 <body>
 	<div id="header">
-		<h1>Score My Day</h1>
+		<h1 onclick="main()">Score My Day</h1>
 		<div>
 			<button type="button" onclick="join()">회원가입</button>
 			<button type="button" onclick="main()">홈</button>

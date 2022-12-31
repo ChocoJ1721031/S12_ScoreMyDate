@@ -12,21 +12,22 @@ window.onload = function() {
 		success: function(value) {
 			let calendarEl = document.getElementById('calendar');
 			let calendar = new FullCalendar.Calendar(calendarEl, {
-				initialDate: '2022-12-21',
+				initialDate: new Date(),
 				headerToolbar: {
 					left: 'prev next today',
 					center: 'title',
 					right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 				},
 				dayMaxEvents: true,
-				events: value.list
+				events: [{title: '아 젠장 벌쌔 새해다', start: '2023-01-01', end: '2023-01-20'}]
+				//value.list
 			});
 			calendar.render();
 		},
 		error: function(event) {
 			let calendarEl = document.getElementById('calendar');
 			let calendar = new FullCalendar.Calendar(calendarEl, {
-				initialDate: '2022-12-21',
+				initialDate: new Date(),
 				headerToolbar: {
 					left: 'prev next today',
 					center: 'title',
@@ -325,7 +326,7 @@ window.onload = function() {
 				success: function(value) {
 					let calendarEl = document.getElementById('calendar');
 					let calendar = new FullCalendar.Calendar(calendarEl, {
-						initialDate: '2022-12-21',
+						initialDate: dataDate,
 						headerToolbar: {
 							left: 'prev next today',
 							center: 'title',
@@ -339,7 +340,7 @@ window.onload = function() {
 				error: function(event) {
 					let calendarEl = document.getElementById('calendar');
 					let calendar = new FullCalendar.Calendar(calendarEl, {
-						initialDate: '2022-12-21',
+						initialDate: new Date(),
 						headerToolbar: {
 							left: 'prev next today',
 							center: 'title',
@@ -454,7 +455,7 @@ function addSchedule(dataDate) { // 스케줄 추가
 			success: function(value) {
 				let calendarEl = document.getElementById('calendar');
 				let calendar = new FullCalendar.Calendar(calendarEl, {
-					initialDate: '2022-12-21',
+					initialDate: dataDate,
 					headerToolbar: {
 						left: 'prev next today',
 						center: 'title',
@@ -468,7 +469,7 @@ function addSchedule(dataDate) { // 스케줄 추가
 			error: function(event) {
 				let calendarEl = document.getElementById('calendar');
 				let calendar = new FullCalendar.Calendar(calendarEl, {
-					initialDate: '2022-12-21',
+					initialDate: dataDate,
 					headerToolbar: {
 						left: 'prev next today',
 						center: 'title',
@@ -595,7 +596,7 @@ function delSchedule(e) {
 		success: function(value) {
 			let calendarEl = document.getElementById('calendar');
 			let calendar = new FullCalendar.Calendar(calendarEl, {
-				initialDate: '2022-12-21',
+				initialDate: dataDate,
 				headerToolbar: {
 					left: 'prev next today',
 					center: 'title',
@@ -609,7 +610,7 @@ function delSchedule(e) {
 		error: function(event) {
 			let calendarEl = document.getElementById('calendar');
 			let calendar = new FullCalendar.Calendar(calendarEl, {
-				initialDate: '2022-12-21',
+				initialDate: dataDate,
 				headerToolbar: {
 					left: 'prev, next today',
 					center: 'title',
