@@ -2,7 +2,7 @@ var memberId = $('#mid').val();
 window.onload = function() {
 	var memberId = $('#mid').val();
 	$.ajax({
-		url: "/main",
+		url: getContextPath()+"/main",
 		type: "post",
 		async: false,
 		data: {
@@ -59,13 +59,13 @@ window.onload = function() {
 									'<button type="button" id="addSchedule" onclick="addSchedule(this)">+</button>'+
 								'</div>'+
 								'<div id="graph_area">'+
-									'<div id="graph">Graph here</div>'+
-									'<button type="button" id="serveyBtn" onclick="servey()">설문조사 버튼</button>'+
+//									'<div id="graph">Graph here</div>'+
+//									'<button type="button" id="serveyBtn" onclick="servey()">설문조사 버튼</button>'+
 								'</div>'+
 							'</div>'+
 							'<div id="modalContent_3">'+
 								'<div id="diary_area">'+
-									'<span id="diary">no text has written</span>'+
+									'<span id="diary">작성된 다이어리가 없습니다.</span>'+
 								'</div>'+
 							'</div>'+
 						'</div>'+
@@ -81,7 +81,7 @@ window.onload = function() {
 			
 			var schedule;
 			$.ajax({
-				url: "/main",
+				url: getContextPath()+"/main",
 				type: "post",
 				async: false,
 				data: {
@@ -89,7 +89,7 @@ window.onload = function() {
 				},
 				dataType: "json",
 				success: function(value) {
-					console.log(value.list)
+					console.log(value.list);
 					schedule = value.list;
 					var schedule_area_2 = document.getElementById('schedule_area_2');
 					
@@ -126,6 +126,84 @@ window.onload = function() {
 					}
 				}
 			});
+			
+			var scvo_date;
+			var scvo_ser_1;
+			var scvo_ser_2;
+			var scvo_ser_3;
+			var scvo_ser_4;
+			var scvo_ser_5;
+			var scvo_score_1;
+			var scvo_ser_diary;
+			
+			$.ajax({
+				url: getContextPath()+"/callServey.do",
+				type: "post",
+				async: false,
+				data: {
+					date: dataDate
+				},
+				dataType: "json",
+				success: function(value) {
+					if(value === "fail") {
+						
+					} else {
+						if(dataDate === value.list[0].dDate) {
+							scvo_date = value.list[0].dDate;
+							scvo_ser_1 = value.list[0].ser_1;
+							scvo_ser_2 = value.list[0].ser_2;
+							scvo_ser_3 = value.list[0].ser_3;
+							scvo_ser_4 = value.list[0].ser_4;
+							scvo_ser_5 = value.list[0].ser_5;
+							scvo_score_1 = value.list[0].score_1;
+							scvo_ser_diary = value.list[0].ser_diary;
+						}
+					}
+				},
+				error: function(request, status, error) {
+					alert("code" + request.status + "\n" + "message : " + request.responseText + "\nerror" + error);
+				}
+			});
+			//callServey(dataDate);
+			console.log(scvo_ser_1);
+			let ser_avg = (scvo_ser_1+scvo_ser_2+scvo_ser_3+scvo_ser_4+scvo_ser_5)/5;
+			
+			$.ajax({ //그래프 표시 여부
+				url: getContextPath()+"/checkServey.do",
+				type: "post",
+				async: false,
+				data: {
+					date: dataDate,
+					mid: $('#mid').val()
+				},
+				dataType: "text",
+				success: function(value) {
+					if(value === "yes") {//해당 날짜 설문내용 표시
+						let graph_area = document.getElementById('graph_area');
+						graph_area.innerHTML ='<div id="graph"></div>';
+						//TODO 그래프 어케 구현할거냐?
+						let graph = document.getElementById('graph');
+						graph.innerHTML = '<div id="">'+
+												'<span>평가 설문</span>'+
+												'<div>'+ser_avg+'</div>'+
+											'</div>'+
+											'<div id="">'+
+												'<span>이날의 점수</span>'+
+												'<div>'+scvo_score_1+'</div>'+
+											'</div>';
+										
+						document.getElementById('diary').innerText = scvo_ser_diary;
+										
+					} else {
+						let graph_area = document.getElementById('graph_area');
+						graph_area.innerHTML = '<button type="button" id="serveyBtn" onclick="servey()">설문조사 버튼</button>';
+					}				
+				},
+				error: function(request, status, error) {
+					alert("/checkServey.do code" + request.status + "\n" + "message : " + request.responseText + "\nerror" + error);
+				}		
+			});
+			
 		}
 	});
 	
@@ -205,7 +283,7 @@ window.onload = function() {
 			}
 			
 			$.ajax({
-				url: "/updateSchedule.do",
+				url: getContextPath()+"/updateSchedule.do",
 				type: "post",
 				async: false,
 				data: data,
@@ -237,7 +315,7 @@ window.onload = function() {
 			
 			var memberId = $('#mid').val();
 			$.ajax({
-				url: "/main",
+				url: getContextPath()+"/main",
 				type: "post",
 				async: false,
 				data: {
@@ -335,7 +413,7 @@ function addSchedule(dataDate) { // 스케줄 추가
 	$('#add').click(function(event) {
 		console.log("add btn");
 		$.ajax({
-			url: "/addSchedule.do",
+			url: getContextPath()+"/addSchedule.do",
 			type: "post",
 			async: false,
 			data: {
@@ -366,7 +444,7 @@ function addSchedule(dataDate) { // 스케줄 추가
 		
 		var memberId = $('#mid').val();
 		$.ajax({
-			url: "/main",
+			url: getContextPath()+"/main",
 			type: "post",
 			async: false,
 			data: {
@@ -374,12 +452,6 @@ function addSchedule(dataDate) { // 스케줄 추가
 			},
 			dataType: "json",
 			success: function(value) {
-				if (value.msg == 'fail') {
-	
-				} else {
-					// TODO: value.list 들어있는 
-	
-				}
 				let calendarEl = document.getElementById('calendar');
 				let calendar = new FullCalendar.Calendar(calendarEl, {
 					initialDate: '2022-12-21',
@@ -426,7 +498,7 @@ function reload_schedule() {
 		searchSchedule();
 	} else {
 		$.ajax({
-			url: "/main",
+			url: getContextPath()+"/main",
 			type: "post",
 			async: false,
 			data: {
@@ -487,7 +559,7 @@ function delSchedule(e) {
 	console.log($(e).parent().data('snum'));
 	console.log($('#mid').val());
 	$.ajax({
-		url: "/delSchedule.do",
+		url: getContextPath()+"/delSchedule.do",
 		type: "post",
 		async: false,
 		data: {
@@ -513,7 +585,7 @@ function delSchedule(e) {
 	
 	var memberId = $('#mid').val();
 	$.ajax({
-		url: "/main",
+		url: getContextPath()+"/main",
 		type: "post",
 		async: false,
 		data: {
@@ -554,7 +626,7 @@ function searchSchedule() {
 	let searchInput = document.getElementById('searchInput');
 	if(searchInput.value !== "" && $('#mid').length) {
 		$.ajax({
-			url: "/searchSchedule.do",
+			url: getContextPath()+"/searchSchedule.do",
 			type: "post",
 			async: false,
 			data: {
@@ -638,11 +710,11 @@ function searchModal(e) { // 스케줄 검색
 	
 }
 
-function servey() {
+function servey() { //설문조사 페이지 이동
 	let date= $('#selecDate').val();
 	let chk = 0;
 	$.ajax({
-		url: "/checkServey.do",
+		url: getContextPath()+"/checkServey.do",
 		type: "post",
 		async: false,
 		data: {
@@ -663,30 +735,30 @@ function servey() {
 	});
 	
 	if(chk == 1) {
-		location.href= "/servey";
+		location.href= getContextPath()+"/servey";
 	}
 }
 
-function getServey() {
-	$.ajax({
-		url: "/checkServey.do",
-		type: "post",
-		async: false,
-		data: {
-			date: date,
-			mid: $('#mid').val()
-		},
-		dataType: "json",
-		success: function(value) {
-			if(value === "yes") {
-				alert("이미 설문이 작성되었습니다.");
-			} else {
-				chk++;
-			}				
-		},
-		error: function(request, status, error) {
-			alert("code" + request.status + "\n" + "message : " + request.responseText + "\nerror" + error);
-		}		
-	});
-}
-
+//function checkServey() { //설문여부 확인
+//	let date= $('#selecDate').val();
+//	$.ajax({
+//		url: "/checkServey.do",
+//		type: "post",
+//		async: false,
+//		data: {
+//			date: date,
+//			mid: $('#mid').val()
+//		},
+//		dataType: "json",
+//		success: function(value) {
+//			if(value === "yes") {
+//				return result = 1;
+//			} else {
+//				return result = 0;
+//			}				
+//		},
+//		error: function(request, status, error) {
+//			alert("checkServey() : code" + request.status + "\n" + "message : " + request.responseText + "\nerror" + error);
+//		}		
+//	});
+//}

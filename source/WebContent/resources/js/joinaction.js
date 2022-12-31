@@ -78,7 +78,7 @@ window.onload = function() {
 				alert("이메일 형식에 맞게 입력해 주세요.")
 			} else {
 				$.ajax({
-					url: path+"/dupchk.lo",
+					url: getContextPath()+"/dupchk.lo",
 					type: "post",
 					async: false,
 					data: {
@@ -148,7 +148,7 @@ function codeBtn() {
 	var btn = document.getElementById('mailCodeBtn');
 	var chk = 0;
 	var mailCode;
-	var url = path+"/codeSend.lo";
+	var url = getContextPath()+"/codeSend.lo";
 	var data;
 	function mailCode1(value) {
 		if (value === "fail") {
@@ -182,7 +182,7 @@ function codeBtn() {
 	}
 	
 	$.ajax({
-		url: path+url,
+		url: getContextPath()+url,
 		type: "post",
 		async: false,
 		data: {
@@ -204,10 +204,10 @@ function codeBtn() {
 
 
 function main() {
-	location.href = path+"/main";
+	location.href = getContextPath()+"/main";
 }
 function login() {
-	location.href = path+"/login";
+	location.href = getContextPath()+"/login";
 }
 
 function join() {
@@ -251,7 +251,7 @@ function join() {
 	if (chk == 0) {
 		event.preventDefault();
 	} else if(chk == 1) {
-		location.href = path+"/login";
+		location.href = getContextPath()+"/login";
 	}
 	
 }

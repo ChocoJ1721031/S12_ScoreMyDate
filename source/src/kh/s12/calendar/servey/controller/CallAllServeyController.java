@@ -15,22 +15,21 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-import kh.s12.calendar.main.model.CalendarVO;
 import kh.s12.calendar.member.model.MemberVO;
 import kh.s12.calendar.servey.model.ServeyContentVO;
 import kh.s12.calendar.servey.model.ServeyService;
 
-@WebServlet("/callServey.do")
-public class CallServeyController extends HttpServlet {
+@WebServlet("/callAllServey.do")
+public class CallAllServeyController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public CallServeyController() {
-        super();
-    }
+	public CallAllServeyController() {
+		super();
+	}
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
-		
+
 		Gson gson = new Gson();
 		Map<String, Object> map = new HashMap<String, Object>();
 		HttpSession session = request.getSession();
@@ -40,20 +39,18 @@ public class CallServeyController extends HttpServlet {
 
 		if (mvo != null) {
 			int mid = mvo.getMid();
-			String date = request.getParameter("date");
 
 			ArrayList<ServeyContentVO> scvoList = new ArrayList<ServeyContentVO>();
-			scvoList = sservice.callServey(mid, date);
+			scvoList = sservice.callAllServey(mid);
 
 			System.out.println("/callServey.do 컨트롤러");
 
 			if (scvoList != null) {
-				System.out.println("/callServey.do 설문 호출 성공!");
-				System.out.println(scvoList);
+				System.out.println("/callAllServey.do 설문 호출 성공!");
 				map.put("list", scvoList);
 			} else {
-				System.out.println("/callServey.do 설문 호출 실패!");
-				out.append("fail");
+				System.out.println("/callAllServey.do 설문 호출 실패!");
+				map.put("msg", "fail");
 			}
 			out.println(gson.toJson(map));
 		}

@@ -4,7 +4,7 @@ window.onload = function() {
 		var pw = $('#pw').val();
 		var chk = 0;
 		$.ajax({
-			url: path+"/login.do",
+			url: getContextPath()+"/login.do",
 			type: "post",
 			async: false,
 			data: {
@@ -25,7 +25,7 @@ window.onload = function() {
 		});
 		
 		if(chk == 1) {
-			location.href=path+"/main";
+			location.href = getContextPath()+"/main";
 		}
 		
 	});

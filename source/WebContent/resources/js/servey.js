@@ -10,9 +10,6 @@
 
 
 
-
-
-
 function addServey() {
 	let mid = $('#mid').val();
 	let date = document.getElementsByName('date')[0];

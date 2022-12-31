@@ -38,15 +38,23 @@ public class ServeyService {
 		return result;
 	}
 	
-	public ArrayList<ServeyContentVO> callServey(int mid) {
+	public ArrayList<ServeyContentVO> callAllServey(int mid) {
 		Connection conn = getConnection();
 		ArrayList<ServeyContentVO> list = null;
 		
-		list = ServeyDAO.callServey(conn, mid);
+		list = ServeyDAO.callAllServey(conn, mid);
 		close(conn);
 		
 		return list;
 	}
 	
-	
+	public ArrayList<ServeyContentVO> callServey(int mid, String date) {
+		Connection conn = getConnection();
+		ArrayList<ServeyContentVO> list = null;
+		
+		list = ServeyDAO.callServey(conn, mid, date);
+		close(conn);
+		
+		return list;
+	}
 }
