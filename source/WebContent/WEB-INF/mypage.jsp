@@ -16,12 +16,13 @@
 <link  rel='stylesheet' href='/resources/css/servey.css'/>
 
 <script src='/resources/js/jquery-3.6.1.js'></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="/resources/js/chart.js"></script>
 <script src='/resources/fullcalendar-5.11.3/lib/main.js'></script>
 <script src='/resources/js/mypage.js'></script>
 <script src='/resources/js/header.js'></script>
 
-<title>Insert title here</title>
+<title>Score My Day | 마이페이지</title>
 </head>
 <body>
 	<div id="header">
@@ -57,19 +58,25 @@
 		<div id="serveyData_area">
 			<div id="score_area">
 				<select name="range">
-					<option value="week" selected>주 단위</option>
-					<option value="month">월 단위</option>
-					<option value="year">년 단위</option>
+					<option value="week" selected>1주일</option>
+					<option value="month">1개월</option>
+					<option value="year">1년</option>
 				</select>
 				<div>
-					<div id="servey_avg"></div>
-					<div id="score_avg"></div>
+					<div id="servey_avg">
+						<div id="servey_avg_title">설문 평균</div>
+						<div id="servey_avg_data"></div>
+					</div>
+					<div id="score_avg">
+						<div id="score_avg_title">점수 평균</div>
+						<div id="score_avg_data"></div>
+					</div>
 				</div>
 
 			</div>
 			
 			<div id="graph_area">
-			
+				<canvas id="myChart"></canvas>
 			</div>
 		</div>
 	</div>
