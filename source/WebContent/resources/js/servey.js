@@ -27,7 +27,7 @@ function addServey() {
 	console.log(diary.value);
 	
 	$.ajax({
-		url: "/insertServey.do",
+		url: getContextPath()+"/insertServey.do",
 		type: "post",
 		async: false,
 		data: {
@@ -55,6 +55,6 @@ function addServey() {
 		
 	});
 	if(chk > 0) {
-		location.href = "/main";
+		location.href = getContextPath()+"/main";
 	}
 }

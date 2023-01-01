@@ -138,7 +138,7 @@ window.onload = function() {
 			var scvo_ser_diary;
 			
 			$.ajax({
-				url: getContextPath()+"/callServey.do",
+				url: getContextPath()+"/callServey.do", //해당 날짜 설문내용 호출
 				type: "post",
 				async: false,
 				data: {
@@ -169,7 +169,7 @@ window.onload = function() {
 			console.log(scvo_ser_1);
 			let ser_avg = (scvo_ser_1+scvo_ser_2+scvo_ser_3+scvo_ser_4+scvo_ser_5)/5;
 			
-			$.ajax({ //그래프 표시 여부
+			$.ajax({ //점수 표시 여부
 				url: getContextPath()+"/checkServey.do",
 				type: "post",
 				async: false,
@@ -182,7 +182,6 @@ window.onload = function() {
 					if(value === "yes") {//해당 날짜 설문내용 표시
 						let graph_area = document.getElementById('graph_area');
 						graph_area.innerHTML ='<div id="graph"></div>';
-						//TODO 그래프 어케 구현할거냐?
 						let graph = document.getElementById('graph');
 						graph.innerHTML = '<div id="">'+
 												'<span>평가 설문</span>'+
