@@ -80,6 +80,7 @@
 	width: 200px;
 	height: 250px;
 	border: 1px solid black;
+	overflow: scroll;
 }
 #schedule_area_2 {
 	display: flex;
@@ -93,27 +94,41 @@
 	margin: 3px 5px 3px 5px;
 }
 .daySchedule_title {
-	width: 158px;
+	width: 150px;
 	overflow-wrap: break-word;
 }
 .delBtn {
-	
+	max-height: 20px;
 }
 #schedule {
 	margin: 3px;
 	background-color: skyblue;
 }
-
-
 #graph_area {
 	width: 250px;
 	height: 250px;
-	border: 1px solid black;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: center;
 }
+#graph {
+	display: flex;
+	justify-content: space-around;
+}
+#servey, #score {
+	
+}
+#servey > div, #score > div {
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
+	font-size: 50px;
+}
+
 #serveyBtn {
+	height: 30px;
+	font-size: 14px;
+	font-weight: bold;
 }
 
 /*----------------------modalContent_3--------------------------*/
@@ -124,18 +139,44 @@
 	border: 1px solid black;
 	padding: 5px;
 }
-
+#diary {
+	overflow: scroll;
+}
 /*----------------------modalContent_5--------------------------*/
+#modalContent_5, #modalContent_7 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+#modalContent_5 > div:first-child, #modalContent_7 > div:first-child {
+	margin-top: 30px;
+}
+#modalContent_5 > div:nth-child(2), #modalContent_7 > div:nth-child(2) {
+	margin-top: 30px;
+}
+#title {
+	width: 300px;
+	height: 30px;
+	overflow: scroll;
+	overflow-wrap: break-word;
+	font-size: 20px;
+}
+#modalContent_5 > div:last-child, #modalContent_7 > div:last-child {
+	margin-top: 30px;
+	width: 300px;
+	display: flex;
+	justify-content: space-between;
+}
+#add, #cancel, #update {
+	width: 120px;
+}
 
 
 
-
-
-
-
-
-
-
+/*----------------------modalContent_8--------------------------*/
+.scheduleList {
+	
+}
 
 
 

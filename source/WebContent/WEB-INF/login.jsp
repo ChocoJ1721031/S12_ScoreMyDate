@@ -6,6 +6,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<link rel="stylesheet" href="/resources/css/reset.css"/>
+<link  rel='stylesheet' href='/resources/css/header.css'/>
+<link  rel='stylesheet' href='/resources/css/servey.css'/>
+
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.js"></script>
 <script type="text/javascript" src="/resources/js/loginaction.js"></script>
@@ -16,10 +20,12 @@ var path="<%=request.getContextPath()%>";
 </head>
 <body>
 	<div id="header">
-		<h1 onclick="main()">Score My Day</h1>
 		<div>
-			<button type="button" onclick="join()">회원가입</button>
-			<button type="button" onclick="main()">홈</button>
+			<h1 onclick="main()">Score My Day</h1>
+			<div>
+				<button type="button" onclick="join()">회원가입</button>
+				<button type="button" onclick="main()">홈</button>
+			</div>
 		</div>
 	</div>
 	

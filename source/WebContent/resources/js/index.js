@@ -182,11 +182,11 @@ window.onload = function() {
 						let graph_area = document.getElementById('graph_area');
 						graph_area.innerHTML ='<div id="graph"></div>';
 						let graph = document.getElementById('graph');
-						graph.innerHTML = '<div id="">'+
+						graph.innerHTML = '<div id="servey">'+
 												'<span>평가 설문</span>'+
 												'<div>'+ser_avg+'</div>'+
 											'</div>'+
-											'<div id="">'+
+											'<div id="score">'+
 												'<span>이날의 점수</span>'+
 												'<div>'+scvo_score_1+'</div>'+
 											'</div>';
@@ -195,7 +195,7 @@ window.onload = function() {
 										
 					} else {
 						let graph_area = document.getElementById('graph_area');
-						graph_area.innerHTML = '<button type="button" id="serveyBtn" onclick="servey()">설문조사 버튼</button>';
+						graph_area.innerHTML = '<button type="button" id="serveyBtn" onclick="servey()">평가하러 가기</button>';
 					}				
 				},
 				error: function(request, status, error) {
