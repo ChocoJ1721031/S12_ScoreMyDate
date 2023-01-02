@@ -43,7 +43,7 @@ public class CallAllServeyController extends HttpServlet {
 			ArrayList<ServeyContentVO> scvoList = new ArrayList<ServeyContentVO>();
 			scvoList = sservice.callAllServey(mid);
 
-			System.out.println("/callServey.do 컨트롤러");
+			System.out.println("/callAllServey.do 컨트롤러");
 
 			if (scvoList != null) {
 				System.out.println("/callAllServey.do 설문 호출 성공!");

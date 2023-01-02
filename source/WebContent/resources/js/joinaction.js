@@ -214,7 +214,7 @@ function join() {
 	var chk = 0;
 	if($('#mailOk').val() == 1 && $('#pw').val() != "" && $('#pw').val() == $('#pw2').val() && $('#mname').val() != null) {
 		$.ajax({
-			url: path+"/join.lo",
+			url: "/join.lo",
 			type: "post",
 			async: false,
 			data: {

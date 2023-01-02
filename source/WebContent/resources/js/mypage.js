@@ -6,14 +6,28 @@ window.onload = function() {
 	var score_avg_data = document.getElementById('score_avg_data');
 	
 	var result_avgScore =  avgScore();
-	servey_avg_data.innerHTML = result_avgScore[0].toFixed(1);
-	score_avg_data.innerHTML = result_avgScore[1].toFixed(1);
+	console.log(typeof result_avgScore[1]);
+	if(typeof result_avgScore[0] || typeof result_avgScore[1]) {
+		servey_avg_data.innerHTML = "-";
+		score_avg_data.innerHTML = "-";
+	} else {
+		servey_avg_data.innerHTML = result_avgScore[0].toFixed(1);
+		score_avg_data.innerHTML = result_avgScore[1].toFixed(1);
+		
+	}
 	graph();
 	
 	range.onchange = function() {
 		var result_avgScore =  avgScore();
-		servey_avg_data.innerHTML = result_avgScore[0].toFixed(1);
-		score_avg_data.innerHTML = result_avgScore[1].toFixed(1);
+		if(typeof result_avgScore[0] || typeof result_avgScore[1]) {
+			servey_avg_data.innerHTML = "-";
+			score_avg_data.innerHTML = "-";
+		} else {
+			servey_avg_data.innerHTML = result_avgScore[0].toFixed(1);
+			score_avg_data.innerHTML = result_avgScore[1].toFixed(1);
+			
+		}
+		
 		graph();
 	}
 	

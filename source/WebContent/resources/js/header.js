@@ -18,7 +18,5 @@ function mypage() {
 function main() {
 	location.href = getContextPath()+"/main";
 }
-function join() {
-	location.href = getContextPath()+"/join";
-}
+
 

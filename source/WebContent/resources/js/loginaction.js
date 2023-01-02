@@ -31,3 +31,6 @@ window.onload = function() {
 	});
 }
 
+function join() {
+	location.href = getContextPath()+"/join";
+}
