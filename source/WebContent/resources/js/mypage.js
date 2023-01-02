@@ -6,14 +6,14 @@ window.onload = function() {
 	var score_avg_data = document.getElementById('score_avg_data');
 	
 	var result_avgScore =  avgScore();
-	servey_avg_data.innerHTML = result_avgScore[0];
-	score_avg_data.innerHTML = result_avgScore[1];
+	servey_avg_data.innerHTML = result_avgScore[0].toFixed(1);
+	score_avg_data.innerHTML = result_avgScore[1].toFixed(1);
 	graph();
 	
 	range.onchange = function() {
 		var result_avgScore =  avgScore();
-		servey_avg_data.innerHTML = result_avgScore[0];
-		score_avg_data.innerHTML = result_avgScore[1];
+		servey_avg_data.innerHTML = result_avgScore[0].toFixed(1);
+		score_avg_data.innerHTML = result_avgScore[1].toFixed(1);
 		graph();
 	}
 	
@@ -329,21 +329,45 @@ function graph() {
 }
 
 function changeName() {
-	let nameArea = document.getElementById('nameArea');
-	let nameInput = document.createElement('div');
-	nameInput.setAttribute('id', 'nameInputArea');
+	if($('#nameInputArea').length > 0) {
+		
+	} else {
+		let nameArea = document.getElementById('nameArea');
+		let nameInput = document.createElement('div');
+		nameInput.setAttribute('id', 'nameInputArea');
+		nameArea.appendChild(nameInput);
+		
+		
+		let nameInputTag_1 = document.createElement('input');
+		nameInputTag_1.setAttribute('type', 'text');
+		nameInputTag_1.setAttribute('name', 'newName');
+		nameInputTag_1.setAttribute('placeholder', '변경할 닉네임을 입력해 주세요.');
+		nameInput.appendChild(nameInputTag_1);
+	}
 	
-	let nameInputTag_1 = document.createElement('input');
-	nameInputTag_1.setAttribute('type', 'password');
-	
-	let nameInputTag_2 = document.createElement('input');
-	nameInputTag_2.setAttribute('type', 'password');
 }
 
 function changePwd() {
-	let pwdArea = document.getElementById('pwdArea');
-	let pwdInput = document.createElement('div');
-	
+	if($('#pwdInputArea').length > 0) {
+		
+	} else {
+		let pwdArea = document.getElementById('pwdArea');
+		let pwdInput = document.createElement('div');
+		pwdInput.setAttribute('id', 'pwdInputArea')
+		pwdArea.appendChild(pwdInput);
+		
+		let pwdInputTag_1 = document.createElement('input');
+		pwdInputTag_1.setAttribute('type', 'password');
+		pwdInputTag_1.setAttribute('name', 'newPwd');
+		pwdInputTag_1.setAttribute('placeholder', '비밀번호를 입력해 주세요.');
+		pwdInput.appendChild(pwdInputTag_1);
+		
+		let pwdInputTag_2 = document.createElement('input');
+		pwdInputTag_2.setAttribute('type', 'password');
+		pwdInputTag_2.setAttribute('name', 'newPwd_2');
+		pwdInputTag_2.setAttribute('placeholder', '위와 동일하게 입력해 주세요.');
+		pwdInput.appendChild(pwdInputTag_2);
+	}
 	
 }
 

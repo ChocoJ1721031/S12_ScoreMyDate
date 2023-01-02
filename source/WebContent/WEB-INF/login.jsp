@@ -8,7 +8,7 @@
 
 <link rel="stylesheet" href="/resources/css/reset.css"/>
 <link  rel='stylesheet' href='/resources/css/header.css'/>
-<link  rel='stylesheet' href='/resources/css/servey.css'/>
+<link  rel='stylesheet' href='/resources/css/login.css'/>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="/resources/js/jquery-3.6.1.js"></script>
@@ -32,7 +32,7 @@ var path="<%=request.getContextPath()%>";
 	<div id="section">
 		<div>
 			<form>
-				<div><h2>로그인</h2></div>
+				<div><h1>로그인</h1></div>
 				<div>
 					<input class="" type="text" id="mail" name="mail" placeholder="이메일">
 					<input class="" type="password" id="pw" name="pw" placeholder="비밀번호">
