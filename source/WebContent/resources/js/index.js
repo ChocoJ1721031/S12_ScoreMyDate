@@ -19,8 +19,7 @@ window.onload = function() {
 					right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 				},
 				dayMaxEvents: true,
-				events: [{title: '아 젠장 벌쌔 새해다', start: '2023-01-01', end: '2023-01-20'}]
-				//value.list
+				events: value.list
 			});
 			calendar.render();
 		},

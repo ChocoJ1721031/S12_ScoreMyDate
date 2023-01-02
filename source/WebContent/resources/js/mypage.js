@@ -1,17 +1,19 @@
+var chart = null;
 window.onload = function() {
 	let range = document.getElementsByName('range')[0];
 	
 	var servey_avg_data = document.getElementById('servey_avg_data');
 	var score_avg_data = document.getElementById('score_avg_data');
 	
+	var result_avgScore =  avgScore();
+	servey_avg_data.innerHTML = result_avgScore[0];
+	score_avg_data.innerHTML = result_avgScore[1];
 	graph();
 	
-	servey_avg_data.innerHTML = avgScore()[0];
-	score_avg_data.innerHTML = avgScore()[1];
-	//score_avg_data.innerHTML = avgservey();
 	range.onchange = function() {
-		servey_avg_data.innerHTML = avgScore()[0];
-		score_avg_data.innerHTML = avgScore()[1];
+		var result_avgScore =  avgScore();
+		servey_avg_data.innerHTML = result_avgScore[0];
+		score_avg_data.innerHTML = result_avgScore[1];
 		graph();
 	}
 	
@@ -45,6 +47,7 @@ function avgScore() {
 		},
 		dataType: "json",
 		success: function(value) {
+			
 			if (value === "fail") {
 
 			} else {
@@ -115,6 +118,8 @@ function avgScore() {
 			alert("code" + request.status + "\n" + "message : " + request.responseText + "\nerror" + error);
 		}
 	});
+	console.log("#### result ####");
+	console.log(result);
 	return result;
 }
 
@@ -174,6 +179,7 @@ function graph() {
 							graph_data_2.push(0);
 						}
 					}
+					console.log("###  graph data 1 ####");
 				} else if(range.value === 'month') {
 					for(let k=0; k<31; k++){
 						let graphDate = new Date();
@@ -200,7 +206,9 @@ function graph() {
 							graph_data_1.push(0);
 							graph_data_2.push(0);
 						}
+						
 					}
+					console.log("###  graph data 2  ####");
 				} else if(range.value === 'year') {
 					for(let k=0; k<12; k++){
 						let graphDate = new Date();
@@ -263,29 +271,55 @@ function graph() {
 						
 					}
 					
+					console.log("###  graph data  ####");
 					console.log(graph_data_1);
 					console.log(graph_data_2);
 				}
+				//console.log(chart);
+				console.log(document.getElementById('myChart').getContext('2d'));
 				
 				var ctx = document.getElementById('myChart').getContext('2d'); // 그래프
-			    var chart = new Chart(ctx, {
-			        type: 'bar',
-			        data: {
-			            labels: graph_range,
-			            datasets: [{
-			                label: '설문 평균',
-			                backgroundColor: 'rgb(255, 99, 132)',
-			                borderColor: 'rgb(255, 99, 132)',
-			                data: graph_data_1
-			            	},
-							{
-			                label: '점수 평균',
-			                backgroundColor: 'rgb(255,160,123)',
-			                borderColor: 'rgb(255,160,123)',
-			                data: graph_data_2
-			            }]
-			        },
-			    });
+				if(chart == null){
+					chart = new Chart(ctx, {
+				        type: 'bar',
+				        data: {
+				            labels: graph_range,
+				            datasets: [{
+				                label: '설문 평균',
+				                backgroundColor: 'rgb(255, 99, 132)',
+				                borderColor: 'rgb(255, 99, 132)',
+				                data: graph_data_1
+				            	},
+								{
+				                label: '점수 평균',
+				                backgroundColor: 'rgb(255,160,123)',
+				                borderColor: 'rgb(255,160,123)',
+				                data: graph_data_2
+				            }]
+			        	}
+			    	});
+				} else {
+					chart.config = {
+				        type: 'bar',
+				        data: {
+				            labels: graph_range,
+				            datasets: [{
+				                label: '설문 평균',
+				                backgroundColor: 'rgb(255, 99, 132)',
+				                borderColor: 'rgb(255, 99, 132)',
+				                data: graph_data_1
+				            	},
+								{
+				                label: '점수 평균',
+				                backgroundColor: 'rgb(255,160,123)',
+				                borderColor: 'rgb(255,160,123)',
+				                data: graph_data_2
+				            }]
+				        }
+			    	};
+					chart.update();
+				}
+			    
 			}
 		},
 		error: function(request, status, error) {
@@ -294,12 +328,28 @@ function graph() {
 	});
 }
 
+function changeName() {
+	let nameArea = document.getElementById('nameArea');
+	let nameInput = document.createElement('div');
+	nameInput.setAttribute('id', 'nameInputArea');
+	
+	let nameInputTag_1 = document.createElement('input');
+	nameInputTag_1.setAttribute('type', 'password');
+	
+	let nameInputTag_2 = document.createElement('input');
+	nameInputTag_2.setAttribute('type', 'password');
+}
 
+function changePwd() {
+	let pwdArea = document.getElementById('pwdArea');
+	let pwdInput = document.createElement('div');
+	
+	
+}
 
-
-
-
-
+function change() {
+	
+}
 
 
 

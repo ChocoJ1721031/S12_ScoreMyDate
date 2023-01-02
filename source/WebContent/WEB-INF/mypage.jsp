@@ -47,18 +47,18 @@
 	<div id="section">
 		<div id="profile_area">
 			<span><%=mvo.getMname()%>님, 안녕하세요</span>
-			<div>
-				<button type="button">닉네임 변경</button>
+			<div id="nameArea">
+				<button type="button" onclick="changeName()">닉네임 변경</button>
 			</div>
-			<div>
-				<button type="button">비밀번호 변경</button>
+			<div id="pwdArea">
+				<button type="button" onclick="changePwd()">비밀번호 변경</button>
 			</div>
 		</div>
 		
 		<div id="serveyData_area">
 			<div id="score_area">
 				<select name="range">
-					<option value="week" selected>1주일</option>
+					<option value="week" selected>1주</option>
 					<option value="month">1개월</option>
 					<option value="year">1년</option>
 				</select>
