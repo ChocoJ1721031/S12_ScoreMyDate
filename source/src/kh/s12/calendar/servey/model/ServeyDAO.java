@@ -87,13 +87,13 @@ public class ServeyDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<ServeyContentVO> list =  new ArrayList<ServeyContentVO>();
-		String sql = "SELECT TO_CHAR(TO_DATE(DDATE, 'YY-MM-DD'), 'YYYY-MM-DD') AS DDATE, MID, SER_1, SER_2, SER_3, SER_4, SER_5, SER_SCORE_1, SER_CONTENT FROM SERVEY_CONTENT WHERE MID=?";
-		
+		String sql = "SELECT TO_CHAR(TO_DATE(DDATE, 'YY-MM-DD'), 'YYYY-MM-DD')"
+				+ " AS DDATE, MID, SER_1, SER_2, SER_3, SER_4, SER_5, SER_SCORE_1,"
+				+ " SER_CONTENT FROM SERVEY_CONTENT WHERE MID=?";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, mid);
 			rs = pstmt.executeQuery();
-			
 			while(rs.next()) {
 				scvo = new ServeyContentVO();
 				scvo.setdDate(rs.getString(1));
@@ -123,14 +123,14 @@ public class ServeyDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<ServeyContentVO> list = new ArrayList<ServeyContentVO>();
-		String sql = "SELECT TO_CHAR(TO_DATE(DDATE, 'YY-MM-DD'), 'YYYY-MM-DD') AS DDATE, MID, SER_1, SER_2, SER_3, SER_4, SER_5, SER_SCORE_1, SER_CONTENT FROM SERVEY_CONTENT WHERE DDATE=? AND MID=?";
-		
+		String sql = "SELECT TO_CHAR(TO_DATE(DDATE, 'YY-MM-DD'), 'YYYY-MM-DD')"
+				+ " AS DDATE, MID, SER_1, SER_2, SER_3, SER_4, SER_5, SER_SCORE_1,"
+				+ " SER_CONTENT FROM SERVEY_CONTENT WHERE DDATE=? AND MID=?";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, date);
 			pstmt.setInt(2, mid);
 			rs = pstmt.executeQuery();
-			
 			while(rs.next()) {
 				scvo = new ServeyContentVO();
 				scvo.setdDate(rs.getString(1));
@@ -142,7 +142,6 @@ public class ServeyDAO {
 				scvo.setSer_5(rs.getInt(7));
 				scvo.setScore_1(rs.getInt(8));
 				scvo.setSer_diary(rs.getString(9));
-				
 				list.add(scvo);
 			}
 		} catch (Exception e) {

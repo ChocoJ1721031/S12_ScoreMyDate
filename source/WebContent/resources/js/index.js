@@ -706,7 +706,6 @@ function searchModal(e) { // 스케줄 검색
 		scheduleList.appendChild(scheduleTitle);
 		scheduleTitle.innerHTML = e[k].title;
 	}
-	
 }
 
 function servey() { //설문조사 페이지 이동

@@ -7,31 +7,25 @@ window.onload = function() {
 	
 	var result_avgScore =  avgScore();
 	console.log(typeof result_avgScore[1]);
-	if(typeof result_avgScore[0] || typeof result_avgScore[1]) {
+	if(result_avgScore.length < 1) {
 		servey_avg_data.innerHTML = "-";
 		score_avg_data.innerHTML = "-";
 	} else {
 		servey_avg_data.innerHTML = result_avgScore[0].toFixed(1);
 		score_avg_data.innerHTML = result_avgScore[1].toFixed(1);
-		
 	}
 	graph();
-	
 	range.onchange = function() {
 		var result_avgScore =  avgScore();
-		if(typeof result_avgScore[0] || typeof result_avgScore[1]) {
+		if(result_avgScore.length < 1) {
 			servey_avg_data.innerHTML = "-";
 			score_avg_data.innerHTML = "-";
 		} else {
 			servey_avg_data.innerHTML = result_avgScore[0].toFixed(1);
 			score_avg_data.innerHTML = result_avgScore[1].toFixed(1);
-			
 		}
-		
 		graph();
 	}
-	
-	
 }
 
 
@@ -61,9 +55,7 @@ function avgScore() {
 		},
 		dataType: "json",
 		success: function(value) {
-			
 			if (value === "fail") {
-
 			} else {
 				if(range.value === 'week') {
 					var lastweekOrg = new Date(todayOrg.setDate(todayOrg.getDate() - 7));
@@ -115,17 +107,21 @@ function avgScore() {
 					}
 				}
 				
-				
 				let arr_serveySum = 0;
 				let arr_scoreSum = 0;
 				for(let j=0; j<arr_servey.length; j++) {
 					arr_serveySum += arr_servey[j];
 					arr_scoreSum += arr_score[j];
 				}
-				var servey_avg = arr_serveySum/arr_servey.length;
-				result.push(servey_avg);
-				var score_avg = arr_scoreSum/arr_score.length;
-				result.push(score_avg);
+				var servey_avg = 0;
+				var score_avg = 0;
+				if(arr_servey.length > 0 && arr_score.length > 0) {
+					servey_avg = arr_serveySum/arr_servey.length;
+					result.push(servey_avg);
+					score_avg = arr_scoreSum/arr_score.length;
+					result.push(score_avg);
+				}
+				
 			}
 		},
 		error: function(request, status, error) {

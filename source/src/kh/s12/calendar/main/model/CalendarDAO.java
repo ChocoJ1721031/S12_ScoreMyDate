@@ -44,7 +44,8 @@ public class CalendarDAO {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		if(cvo.getEnd() == null || cvo.getEnd().equals("")) {
-			String sql = "INSERT INTO SCHEDULE(SNUM, MID, SCONTENT, SDATE_START) VALUES((SELECT MAX(SNUM)+1 AS SNUM FROM SCHEDULE), ?, ?, ?)";
+			String sql = "INSERT INTO SCHEDULE(SNUM, MID, SCONTENT, SDATE_START)"
+					+ " VALUES((SELECT MAX(SNUM)+1 AS SNUM FROM SCHEDULE), ?, ?, ?)";
 			try {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, cvo.getMid());
@@ -58,7 +59,8 @@ public class CalendarDAO {
 				JDBCTemplate.close(pstmt);
 			}
 		}else {
-			String sql = "INSERT INTO SCHEDULE VALUES((SELECT MAX(SNUM)+1 AS SNUM FROM SCHEDULE), ?, ?, ?, ?)";
+			String sql = "INSERT INTO SCHEDULE VALUES("
+					+ "(SELECT MAX(SNUM)+1 AS SNUM FROM SCHEDULE), ?, ?, ?, ?)";
 			try {
 				pstmt = conn.prepareStatement(sql);
 				pstmt.setInt(1, cvo.getMid());
